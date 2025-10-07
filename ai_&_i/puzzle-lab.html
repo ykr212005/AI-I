@@ -1,0 +1,3025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & I: Puzzle Duel</title>
+        <style>
+/* Inlined style.css */
+/* --- start of inlined CSS --- */
+:root {
+    /* Primitive Color Tokens */
+    --color-white: rgba(255, 255, 255, 1);
+    --color-black: rgba(0, 0, 0, 1);
+    --color-cream-50: rgba(252, 252, 249, 1);
+    --color-cream-100: rgba(255, 255, 253, 1);
+    --color-gray-200: rgba(245, 245, 245, 1);
+    --color-gray-300: rgba(167, 169, 169, 1);
+    --color-gray-400: rgba(119, 124, 124, 1);
+    --color-slate-500: rgba(98, 108, 113, 1);
+    --color-brown-600: rgba(94, 82, 64, 1);
+    --color-charcoal-700: rgba(31, 33, 33, 1);
+    --color-charcoal-800: rgba(38, 40, 40, 1);
+    --color-slate-900: rgba(19, 52, 59, 1);
+    --color-teal-300: rgba(50, 184, 198, 1);
+    --color-teal-400: rgba(45, 166, 178, 1);
+    --color-teal-500: rgba(33, 128, 141, 1);
+    --color-teal-600: rgba(29, 116, 128, 1);
+    --color-teal-700: rgba(26, 104, 115, 1);
+    --color-teal-800: rgba(41, 150, 161, 1);
+    --color-red-400: rgba(255, 84, 89, 1);
+    --color-red-500: rgba(192, 21, 47, 1);
+    --color-orange-400: rgba(230, 129, 97, 1);
+    --color-orange-500: rgba(168, 75, 47, 1);
+
+    /* RGB versions for opacity control */
+    --color-brown-600-rgb: 94, 82, 64;
+    --color-teal-500-rgb: 33, 128, 141;
+    --color-slate-900-rgb: 19, 52, 59;
+    --color-slate-500-rgb: 98, 108, 113;
+    --color-red-500-rgb: 192, 21, 47;
+    --color-red-400-rgb: 255, 84, 89;
+    --color-orange-500-rgb: 168, 75, 47;
+    --color-orange-400-rgb: 230, 129, 97;
+
+    /* Background color tokens (Light Mode) */
+    --color-bg-1: rgba(59, 130, 246, 0.08); /* Light blue */
+    --color-bg-2: rgba(245, 158, 11, 0.08); /* Light yellow */
+    --color-bg-3: rgba(34, 197, 94, 0.08); /* Light green */
+    --color-bg-4: rgba(239, 68, 68, 0.08); /* Light red */
+    --color-bg-5: rgba(147, 51, 234, 0.08); /* Light purple */
+    --color-bg-6: rgba(249, 115, 22, 0.08); /* Light orange */
+    --color-bg-7: rgba(236, 72, 153, 0.08); /* Light pink */
+    --color-bg-8: rgba(6, 182, 212, 0.08); /* Light cyan */
+
+    /* Semantic Color Tokens (Light Mode) */
+    --color-background: var(--color-cream-50);
+    --color-surface: var(--color-cream-100);
+    --color-text: var(--color-slate-900);
+    --color-text-secondary: var(--color-slate-500);
+    --color-primary: var(--color-teal-500);
+    --color-primary-hover: var(--color-teal-600);
+    --color-primary-active: var(--color-teal-700);
+    --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+    --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+    --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+    --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+    --color-btn-primary-text: var(--color-cream-50);
+    --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+    --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+    --color-error: var(--color-red-500);
+    --color-success: var(--color-teal-500);
+    --color-warning: var(--color-orange-500);
+    --color-info: var(--color-slate-500);
+    --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+    --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+    /* Common style patterns */
+    --focus-ring: 0 0 0 3px var(--color-focus-ring);
+    --focus-outline: 2px solid var(--color-primary);
+    --status-bg-opacity: 0.15;
+    --status-border-opacity: 0.25;
+    --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+    /* RGB versions for opacity control */
+    --color-success-rgb: 33, 128, 141;
+    --color-error-rgb: 192, 21, 47;
+    --color-warning-rgb: 168, 75, 47;
+    --color-info-rgb: 98, 108, 113;
+
+    /* Typography */
+    --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, monospace;
+    --font-size-xs: 11px;
+    --font-size-sm: 12px;
+    --font-size-base: 14px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 20px;
+    --font-size-3xl: 24px;
+    --font-size-4xl: 30px;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 550;
+    --font-weight-bold: 600;
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --letter-spacing-tight: -0.01em;
+
+    /* Spacing */
+    --space-0: 0;
+    --space-1: 1px;
+    --space-2: 2px;
+    --space-4: 4px;
+    --space-6: 6px;
+    --space-8: 8px;
+    --space-10: 10px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-32: 32px;
+
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-base: 8px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
+        0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04),
+        0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+    /* Animation */
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Layout */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+}
+
+/* Dark mode colors */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* RGB versions for opacity control (Dark Mode) */
+        --color-gray-400-rgb: 119, 124, 124;
+        --color-teal-300-rgb: 50, 184, 198;
+        --color-gray-300-rgb: 167, 169, 169;
+        --color-gray-200-rgb: 245, 245, 245;
+
+        /* Background color tokens (Dark Mode) */
+        --color-bg-1: rgba(29, 78, 216, 0.15); /* Dark blue */
+        --color-bg-2: rgba(180, 83, 9, 0.15); /* Dark yellow */
+        --color-bg-3: rgba(21, 128, 61, 0.15); /* Dark green */
+        --color-bg-4: rgba(185, 28, 28, 0.15); /* Dark red */
+        --color-bg-5: rgba(107, 33, 168, 0.15); /* Dark purple */
+        --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
+        --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
+        --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
+
+        /* Semantic Color Tokens (Dark Mode) */
+        --color-background: var(--color-charcoal-700);
+        --color-surface: var(--color-charcoal-800);
+        --color-text: var(--color-gray-200);
+        --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+        --color-primary: var(--color-teal-300);
+        --color-primary-hover: var(--color-teal-400);
+        --color-primary-active: var(--color-teal-800);
+        --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+        --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+        --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+        --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+        --color-error: var(--color-red-400);
+        --color-success: var(--color-teal-300);
+        --color-warning: var(--color-orange-400);
+        --color-info: var(--color-gray-300);
+        --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+        --color-btn-primary-text: var(--color-slate-900);
+        --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+        --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+        --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+        --button-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+        --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+        --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+        /* Common style patterns - updated for dark mode */
+        --focus-ring: 0 0 0 3px var(--color-focus-ring);
+        --focus-outline: 2px solid var(--color-primary);
+        --status-bg-opacity: 0.15;
+        --status-border-opacity: 0.25;
+        --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+        /* RGB versions for dark mode */
+        --color-success-rgb: var(--color-teal-300-rgb);
+        --color-error-rgb: var(--color-red-400-rgb);
+        --color-warning-rgb: var(--color-orange-400-rgb);
+        --color-info-rgb: var(--color-gray-300-rgb);
+    }
+}
+
+/* Data attribute for manual theme switching */
+[data-color-scheme="dark"] {
+    /* RGB versions for opacity control (dark mode) */
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+
+    /* Colorful background palette - Dark Mode */
+    --color-bg-1: rgba(29, 78, 216, 0.15); /* Dark blue */
+    --color-bg-2: rgba(180, 83, 9, 0.15); /* Dark yellow */
+    --color-bg-3: rgba(21, 128, 61, 0.15); /* Dark green */
+    --color-bg-4: rgba(185, 28, 28, 0.15); /* Dark red */
+    --color-bg-5: rgba(107, 33, 168, 0.15); /* Dark purple */
+    --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
+    --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
+    --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
+
+    /* Semantic Color Tokens (Dark Mode) */
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+    /* Common style patterns - updated for dark mode */
+    --focus-ring: 0 0 0 3px var(--color-focus-ring);
+    --focus-outline: 2px solid var(--color-primary);
+    --status-bg-opacity: 0.15;
+    --status-border-opacity: 0.25;
+    --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+    /* RGB versions for dark mode */
+    --color-success-rgb: var(--color-teal-300-rgb);
+    --color-error-rgb: var(--color-red-400-rgb);
+    --color-warning-rgb: var(--color-orange-400-rgb);
+    --color-info-rgb: var(--color-gray-300-rgb);
+}
+
+[data-color-scheme="light"] {
+    /* RGB versions for opacity control (light mode) */
+    --color-brown-600-rgb: 94, 82, 64;
+    --color-teal-500-rgb: 33, 128, 141;
+    --color-slate-900-rgb: 19, 52, 59;
+
+    /* Semantic Color Tokens (Light Mode) */
+    --color-background: var(--color-cream-50);
+    --color-surface: var(--color-cream-100);
+    --color-text: var(--color-slate-900);
+    --color-text-secondary: var(--color-slate-500);
+    --color-primary: var(--color-teal-500);
+    --color-primary-hover: var(--color-teal-600);
+    --color-primary-active: var(--color-teal-700);
+    --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+    --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+    --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+    --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+    --color-btn-primary-text: var(--color-cream-50);
+    --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+    --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+    --color-error: var(--color-red-500);
+    --color-success: var(--color-teal-500);
+    --color-warning: var(--color-orange-500);
+    --color-info: var(--color-slate-500);
+    --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+    /* RGB versions for light mode */
+    --color-success-rgb: var(--color-teal-500-rgb);
+    --color-error-rgb: var(--color-red-500-rgb);
+    --color-warning-rgb: var(--color-orange-500-rgb);
+    --color-info-rgb: var(--color-slate-500-rgb);
+}
+
+/* Base styles */
+html {
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+h1 {
+    font-size: var(--font-size-4xl);
+}
+h2 {
+    font-size: var(--font-size-3xl);
+}
+h3 {
+    font-size: var(--font-size-2xl);
+}
+h4 {
+    font-size: var(--font-size-xl);
+}
+h5 {
+    font-size: var(--font-size-lg);
+}
+h6 {
+    font-size: var(--font-size-md);
+}
+
+p {
+    margin: 0 0 var(--space-16) 0;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+    color: var(--color-primary-hover);
+}
+
+code,
+pre {
+    font-family: var(--font-family-mono);
+    font-size: calc(var(--font-size-base) * 0.95);
+    background-color: var(--color-secondary);
+    border-radius: var(--radius-sm);
+}
+
+code {
+    padding: var(--space-1) var(--space-4);
+}
+
+pre {
+    padding: var(--space-16);
+    margin: var(--space-16) 0;
+    overflow: auto;
+    border: 1px solid var(--color-border);
+}
+
+pre code {
+    background: none;
+    padding: 0;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-16);
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-standard);
+    border: none;
+    text-decoration: none;
+    position: relative;
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.btn--primary {
+    background: var(--color-primary);
+    color: var(--color-btn-primary-text);
+}
+
+.btn--primary:hover {
+    background: var(--color-primary-hover);
+}
+
+.btn--primary:active {
+    background: var(--color-primary-active);
+}
+
+.btn--secondary {
+    background: var(--color-secondary);
+    color: var(--color-text);
+}
+
+.btn--secondary:hover {
+    background: var(--color-secondary-hover);
+}
+
+.btn--secondary:active {
+    background: var(--color-secondary-active);
+}
+
+.btn--outline {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+.btn--outline:hover {
+    background: var(--color-secondary);
+}
+
+.btn--sm {
+    padding: var(--space-4) var(--space-12);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+}
+
+.btn--lg {
+    padding: var(--space-10) var(--space-20);
+    font-size: var(--font-size-lg);
+    border-radius: var(--radius-md);
+}
+
+.btn--full-width {
+    width: 100%;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Form elements */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: var(--space-8) var(--space-12);
+    font-size: var(--font-size-md);
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
+    transition: border-color var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+textarea.form-control {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+}
+
+select.form-control {
+    padding: var(--space-8) var(--space-12);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: var(--select-caret-light);
+    background-repeat: no-repeat;
+    background-position: right var(--space-12) center;
+    background-size: 16px;
+    padding-right: var(--space-32);
+}
+
+/* Add a dark mode specific caret */
+@media (prefers-color-scheme: dark) {
+    select.form-control {
+        background-image: var(--select-caret-dark);
+    }
+}
+
+/* Also handle data-color-scheme */
+[data-color-scheme="dark"] select.form-control {
+    background-image: var(--select-caret-dark);
+}
+
+[data-color-scheme="light"] select.form-control {
+    background-image: var(--select-caret-light);
+}
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    outline: var(--focus-outline);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-8);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+}
+
+.form-group {
+    margin-bottom: var(--space-16);
+}
+
+/* Card component */
+.card {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card__body {
+    padding: var(--space-16);
+}
+
+.card__header,
+.card__footer {
+    padding: var(--space-16);
+    border-bottom: 1px solid var(--color-card-border-inner);
+}
+
+/* Status indicators - simplified with CSS variables */
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-6) var(--space-12);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+}
+
+.status--success {
+    background-color: rgba(
+        var(--color-success-rgb, 33, 128, 141),
+        var(--status-bg-opacity)
+    );
+    color: var(--color-success);
+    border: 1px solid
+        rgba(var(--color-success-rgb, 33, 128, 141), var(--status-border-opacity));
+}
+
+.status--error {
+    background-color: rgba(
+        var(--color-error-rgb, 192, 21, 47),
+        var(--status-bg-opacity)
+    );
+    color: var(--color-error);
+    border: 1px solid
+        rgba(var(--color-error-rgb, 192, 21, 47), var(--status-border-opacity));
+}
+
+.status--warning {
+    background-color: rgba(
+        var(--color-warning-rgb, 168, 75, 47),
+        var(--status-bg-opacity)
+    );
+    color: var(--color-warning);
+    border: 1px solid
+        rgba(var(--color-warning-rgb, 168, 75, 47), var(--status-border-opacity));
+}
+
+.status--info {
+    background-color: rgba(
+        var(--color-info-rgb, 98, 108, 113),
+        var(--status-bg-opacity)
+    );
+    color: var(--color-info);
+    border: 1px solid
+        rgba(var(--color-info-rgb, 98, 108, 113), var(--status-border-opacity));
+}
+
+/* Container layout */
+.container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: var(--space-16);
+    padding-left: var(--space-16);
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: var(--container-sm);
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        max-width: var(--container-md);
+    }
+}
+@media (min-width: 1024px) {
+    .container {
+        max-width: var(--container-lg);
+    }
+}
+@media (min-width: 1280px) {
+    .container {
+        max-width: var(--container-xl);
+    }
+}
+
+/* Utility classes */
+.flex {
+    display: flex;
+}
+.flex-col {
+    flex-direction: column;
+}
+.items-center {
+    align-items: center;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.gap-4 {
+    gap: var(--space-4);
+}
+.gap-8 {
+    gap: var(--space-8);
+}
+.gap-16 {
+    gap: var(--space-16);
+}
+
+.m-0 {
+    margin: 0;
+}
+.mt-8 {
+    margin-top: var(--space-8);
+}
+.mb-8 {
+    margin-bottom: var(--space-8);
+}
+.mx-8 {
+    margin-left: var(--space-8);
+    margin-right: var(--space-8);
+}
+.my-8 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+}
+
+.p-0 {
+    padding: 0;
+}
+.py-8 {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+}
+.px-8 {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+}
+.py-16 {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+}
+.px-16 {
+    padding-left: var(--space-16);
+    padding-right: var(--space-16);
+}
+
+.block {
+    display: block;
+}
+.hidden {
+    display: none;
+}
+
+/* Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: 2px;
+}
+
+/* Dark mode specifics */
+[data-color-scheme="dark"] .btn--outline {
+    border: 1px solid var(--color-border-secondary);
+}
+
+@font-face {
+    font-family: 'FKGroteskNeue';
+    src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
+        format('woff2');
+}
+
+/* END PERPLEXITY DESIGN SYSTEM */
+/* Navigation */
+.nav {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-16) var(--space-24);
+    max-width: var(--container-xl);
+    margin: 0 auto;
+}
+
+.nav-logo {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.nav-menu {
+    display: flex;
+    gap: var(--space-32);
+}
+
+.nav-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: color var(--duration-fast) var(--ease-standard);
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--color-primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+}
+
+.theme-toggle {
+    background: var(--color-secondary);
+    border: none;
+    padding: var(--space-8);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.theme-toggle:hover {
+    background: var(--color-secondary-hover);
+    transform: scale(1.1);
+}
+
+/* Page transitions */
+.page {
+    display: none;
+    min-height: calc(100vh - 80px);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Homepage */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    background: linear-gradient(135deg, var(--color-bg-1), var(--color-bg-8));
+    padding: var(--space-32);
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-16);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-teal-300));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-tagline {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-32);
+    line-height: var(--line-height-normal);
+}
+
+.avatars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-32);
+    margin-bottom: var(--space-32);
+}
+
+.avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-8);
+}
+
+.avatar-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    transition: transform var(--duration-normal) var(--ease-standard);
+}
+
+.human-avatar .avatar-icon {
+    background: linear-gradient(135deg, var(--color-bg-3), var(--color-bg-2));
+    border: 3px solid var(--color-success);
+}
+
+.ai-avatar .avatar-icon {
+    background: linear-gradient(135deg, var(--color-bg-1), var(--color-bg-5));
+    border: 3px solid var(--color-primary);
+}
+
+.avatar:hover .avatar-icon {
+    transform: scale(1.1);
+}
+
+.avatar-label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+.vs-indicator {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    padding: var(--space-8) var(--space-16);
+    background: var(--color-secondary);
+    border-radius: var(--radius-full);
+}
+
+.start-btn {
+    margin-bottom: var(--space-32);
+    padding: var(--space-16) var(--space-32);
+    font-size: var(--font-size-lg);
+}
+
+.stats {
+    display: flex;
+    gap: var(--space-32);
+    justify-content: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Learning Section */
+.learning-container {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: var(--space-32);
+}
+
+.learning-header {
+    text-align: center;
+    margin-bottom: var(--space-32);
+}
+
+.learning-header h2 {
+    margin-bottom: var(--space-16);
+}
+
+.progress-bar {
+    width: 100%;
+    max-width: 400px;
+    height: 8px;
+    background: var(--color-secondary);
+    border-radius: var(--radius-full);
+    margin: 0 auto var(--space-8);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-teal-300));
+    border-radius: var(--radius-full);
+    transition: width var(--duration-normal) var(--ease-standard);
+    width: 33.33%;
+}
+
+.progress-text {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.split-screen {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: var(--space-32);
+    margin-bottom: var(--space-32);
+    min-height: 400px;
+}
+
+.divider {
+    background: linear-gradient(to bottom, var(--color-border), var(--color-primary), var(--color-border));
+    border-radius: var(--radius-full);
+}
+
+.side {
+    padding: var(--space-24);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+}
+
+.ai-side {
+    border-left: 4px solid var(--color-primary);
+}
+
+.human-side {
+    border-left: 4px solid var(--color-success);
+}
+
+.side-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    margin-bottom: var(--space-16);
+}
+
+.avatar-small {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar-small .avatar-icon {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-side .avatar-small .avatar-icon {
+    background: var(--color-bg-1);
+    border: 2px solid var(--color-primary);
+}
+
+.human-side .avatar-small .avatar-icon {
+    background: var(--color-bg-3);
+    border: 2px solid var(--color-success);
+}
+
+.approach-content {
+    line-height: var(--line-height-normal);
+}
+
+.approach-content h4 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-8);
+}
+
+.approach-content p {
+    margin-bottom: var(--space-12);
+}
+
+.approach-content ul {
+    padding-left: var(--space-20);
+}
+
+.approach-content li {
+    margin-bottom: var(--space-6);
+}
+
+.learning-nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-16);
+}
+
+/* Game Section */
+.game-container {
+    max-width: var(--container-lg);
+    margin: 0 auto;
+    padding: var(--space-32);
+}
+
+.game-header {
+    margin-bottom: var(--space-32);
+}
+
+.scoreboard {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-24);
+    background: var(--color-surface);
+    padding: var(--space-20);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    margin-bottom: var(--space-16);
+}
+
+.score {
+    text-align: center;
+}
+
+.human-score {
+    text-align: left;
+}
+
+.ai-score {
+    text-align: right;
+}
+
+.score-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+}
+
+.score-value {
+    display: block;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+
+.level-indicator {
+    text-align: center;
+    padding: var(--space-8) var(--space-16);
+    background: var(--color-bg-1);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-primary);
+}
+
+.level-text {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+}
+
+.game-status {
+    text-align: center;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    padding: var(--space-12);
+    background: var(--color-bg-2);
+    border-radius: var(--radius-base);
+}
+
+.game-board {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+}
+
+.question-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-24);
+    box-shadow: var(--shadow-md);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-16);
+}
+
+.question-type {
+    padding: var(--space-6) var(--space-12);
+    background: var(--color-bg-5);
+    color: var(--color-primary);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.timer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--space-12);
+    background: var(--color-bg-4);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+}
+
+.timer.warning {
+    background: var(--color-bg-6);
+    color: var(--color-warning);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.question-text {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+    margin-bottom: var(--space-20);
+    color: var(--color-text);
+}
+
+.answer-section {
+    display: flex;
+    gap: var(--space-12);
+}
+
+.answer-section .form-control {
+    flex: 1;
+}
+
+/* AI thinking & explanation panel */
+.ai-explain-panel {
+    margin-top: var(--space-16);
+    padding: var(--space-12);
+    background: linear-gradient(90deg, rgba(var(--color-success-rgb), 0.03), rgba(var(--color-primary-hover-rgb,33,128,141), 0.03));
+    border-radius: var(--radius-base);
+    border: 1px solid var(--color-card-border);
+}
+
+.ai-thinking {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.ai-step {
+    display: inline-block;
+    padding: var(--space-6) var(--space-10);
+    background: rgba(0,0,0,0.02);
+    border-radius: var(--radius-sm);
+    transition: background var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+    opacity: 0.9;
+}
+
+.ai-step.highlight {
+    background: linear-gradient(90deg, rgba(var(--color-primary-hover-rgb,33,128,141),0.12), rgba(var(--color-success-rgb),0.06));
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transform: translateY(-3px);
+}
+
+.ai-explanation {
+    margin-top: var(--space-12);
+    padding: var(--space-12);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(90deg, rgba(var(--color-bg-2), 0.08), rgba(var(--color-bg-5), 0.03));
+    border: 1px solid rgba(var(--color-warning-rgb,168,75,47), 0.04);
+}
+
+.ai-explanation h4 {
+    margin: 0 0 var(--space-8) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+}
+
+.ai-explanation p {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.ai-response {
+    margin-top: var(--space-8);
+    padding: var(--space-8);
+    background: linear-gradient(90deg, rgba(var(--color-primary-hover-rgb,33,128,141),0.06), rgba(var(--color-success-rgb,33,128,141),0.02));
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.ai-explanation.detailed {
+    margin-top: var(--space-12);
+    padding: var(--space-12);
+    background: linear-gradient(90deg, rgba(var(--color-bg-6),0.12), rgba(var(--color-bg-2),0.06));
+    border: 1px solid rgba(var(--color-warning-rgb,168,75,47),0.12);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.ai-explanation.detailed h4 { color: var(--color-warning); }
+
+/* Steps controls and container */
+.steps-controls {
+    margin-top: var(--space-8);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.toggle-steps {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+}
+
+.steps-list {
+    margin-top: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.step-item {
+    padding: var(--space-8);
+    border-radius: var(--radius-sm);
+    background: rgba(0,0,0,0.02);
+}
+
+.katex-inline { font-size: 1.05em; }
+
+
+.highlight-term {
+    background: linear-gradient(90deg, rgba(var(--color-warning-rgb,168,75,47),0.14), rgba(var(--color-warning-rgb,168,75,47),0.06));
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.ai-explain-panel .hidden { display: none; }
+
+@keyframes aiThinkPulse {
+    0% { opacity: 0.6; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-4px); }
+    100% { opacity: 0.6; transform: translateY(0); }
+}
+
+.ai-step.pulsing { animation: aiThinkPulse 900ms ease-in-out infinite; }
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-16);
+}
+
+.achievements-panel {
+    margin-top: var(--space-32);
+    padding: var(--space-20);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+}
+
+.achievements-panel h3 {
+    margin-bottom: var(--space-16);
+    text-align: center;
+}
+
+.achievements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-12);
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-8);
+    border-radius: var(--radius-base);
+    transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.achievement.unlocked {
+    background: var(--color-bg-3);
+    border: 1px solid var(--color-success);
+}
+
+.achievement.locked {
+    background: var(--color-secondary);
+    opacity: 0.6;
+}
+
+.achievement-icon {
+    font-size: var(--font-size-lg);
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-2);
+}
+
+.achievement-desc {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-32);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: modalSlideIn var(--duration-normal) var(--ease-standard);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: var(--space-24);
+}
+
+.result-stats {
+    margin-bottom: var(--space-24);
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-8) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: var(--color-text-secondary);
+}
+
+.result-value {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+}
+
+.new-achievements {
+    margin-bottom: var(--space-24);
+}
+
+.new-achievement {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-8);
+    background: var(--color-bg-3);
+    border-radius: var(--radius-base);
+    margin-bottom: var(--space-8);
+    animation: achievementUnlock var(--duration-normal) var(--ease-standard);
+}
+
+@keyframes achievementUnlock {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.modal-actions {
+    display: flex;
+    gap: var(--space-12);
+    justify-content: center;
+}
+
+/* Skill mapping panel in the results modal */
+.skill-mapping-panel {
+    margin-top: var(--space-16);
+    text-align: center;
+}
+
+#skillCanvas {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+    box-shadow: var(--shadow-sm);
+    margin: 0 auto var(--space-12);
+}
+
+.skill-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-12);
+    font-size: var(--font-size-sm);
+}
+
+.legend-item {
+    padding: var(--space-6) var(--space-10);
+    border-radius: var(--radius-full);
+}
+
+.legend-item.human { background: linear-gradient(90deg, var(--color-bg-3), rgba(var(--color-success-rgb),0.06)); }
+.legend-item.ai { background: linear-gradient(90deg, var(--color-bg-1), rgba(var(--color-success-rgb),0.02)); }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: var(--space-12) var(--space-16);
+    }
+  
+    .nav-menu {
+        gap: var(--space-16);
+    }
+  
+    .hero {
+        padding: var(--space-16);
+    }
+  
+    .hero-title {
+        font-size: var(--font-size-3xl);
+    }
+  
+    .avatars {
+        gap: var(--space-16);
+    }
+  
+    .avatar-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+  
+    .stats {
+        flex-direction: column;
+        gap: var(--space-16);
+    }
+  
+    .split-screen {
+        grid-template-columns: 1fr;
+        gap: var(--space-16);
+    }
+  
+    .divider {
+        display: none;
+    }
+  
+    .learning-container,
+    .game-container {
+        padding: var(--space-16);
+    }
+  
+    .scoreboard {
+        grid-template-columns: 1fr;
+        gap: var(--space-16);
+        text-align: center;
+    }
+  
+    .answer-section {
+        flex-direction: column;
+    }
+  
+    .modal-content {
+        margin: var(--space-16);
+        padding: var(--space-20);
+    }
+  
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+
+/* Utility classes for JavaScript interactions */
+.fade-in {
+    animation: fadeIn var(--duration-normal) var(--ease-standard);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp var(--duration-normal) var(--ease-standard);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.correct-answer {
+    background: var(--color-bg-3) !important;
+    border-color: var(--color-success) !important;
+}
+
+.incorrect-answer {
+    background: var(--color-bg-4) !important;
+    border-color: var(--color-error) !important;
+}
+
+/* --- end of inlined CSS --- */
+</style>
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <h1 class="nav-logo">AI & I</h1>
+            <div class="nav-menu">
+                <!-- <a href="#home" class="nav-link active" data-page="home">Home</a> -->
+                <a href="#learn" class="nav-link" data-page="learn">Learn</a>
+                <!-- <a href="#game" class="nav-link" data-page="game">Play</a> -->
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                🌙
+            </button>
+        </div>
+    </nav>
+
+    <!-- Homepage -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">AI & I: Puzzle Duel</h1>
+                <p class="hero-tagline">Can you outthink the AI? Learn, challenge, and grow smarter together.</p>
+                
+                <div class="avatars">
+                    <div class="avatar human-avatar">
+                        <div class="avatar-icon">🧑</div>
+                        <span class="avatar-label">Human</span>
+                    </div>
+                    <div class="vs-indicator">VS</div>
+                    <div class="avatar ai-avatar">
+                        <div class="avatar-icon">🤖</div>
+                        <span class="avatar-label">AI</span>
+                    </div>
+                </div>
+
+                <button class="btn btn--primary btn--lg start-btn" onclick="startLearning()">
+                    Start Learning
+                </button>
+
+                <div class="stats" id="homeStats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalGames">0</span>
+                        <span class="stat-label">Games Played</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="winRate">0%</span>
+                        <span class="stat-label">Win Rate</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="achievements">0</span>
+                        <span class="stat-label">Achievements</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Section -->
+    <section id="learn" class="page">
+        <div class="learning-container">
+            <div class="learning-header">
+                <h2>Learning Mode</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="learningProgress"></div>
+                </div>
+                <span class="progress-text" id="progressText">Module 1 of 3</span>
+            </div>
+
+            <div class="learning-content">
+                <div class="split-screen">
+                    <div class="side ai-side">
+                        <div class="side-header">
+                            <div class="avatar-small ai-avatar">
+                                <span class="avatar-icon">🤖</span>
+                            </div>
+                            <h3>AI Approach</h3>
+                        </div>
+                        <div class="approach-content" id="aiApproach">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="side human-side">
+                        <div class="side-header">
+                            <div class="avatar-small human-avatar">
+                                <span class="avatar-icon">🧑</span>
+                            </div>
+                            <h3>Human Approach</h3>
+                        </div>
+                        <div class="approach-content" id="humanApproach">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="learning-nav">
+                    <button class="btn btn--outline" id="prevBtn" onclick="previousModule()" disabled>
+                        Previous
+                    </button>
+                    <button class="btn btn--primary" id="nextBtn" onclick="nextModule()">
+                        Next
+                    </button>
+                    <button class="btn btn--primary hidden" id="playBtn" onclick="startGame()">
+                        Ready to Play!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Section -->
+    <section id="game" class="page">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="scoreboard">
+                    <div class="score human-score">
+                        <span class="score-label">You</span>
+                        <span class="score-value" id="humanScore">0</span>
+                    </div>
+                    <div class="level-indicator">
+                        <span class="level-text">Level <span id="currentLevel">1</span></span>
+                    </div>
+                    <div class="score ai-score">
+                        <span class="score-label">AI</span>
+                        <span class="score-value" id="aiScore">0</span>
+                    </div>
+                </div>
+
+                <div class="game-status" id="gameStatus">
+                    Get ready to play!
+                </div>
+            </div>
+
+            <div class="game-board">
+                <div class="question-card" id="questionCard">
+                    <div class="question-header">
+                        <span class="question-type" id="questionType">Riddle</span>
+                        <div class="timer" id="timer">
+                            <span id="timerValue">30</span>s
+                        </div>
+                    </div>
+                    <div class="question-text" id="questionText">
+                        Welcome to Puzzle Duel! Click "Start Game" to begin.
+                    </div>
+                    <!-- AI Thinking & Explanation Panel -->
+                    <div class="ai-explain-panel" id="aiExplainPanel">
+                        <div class="ai-thinking" id="aiThinking">
+                            <!-- AI thinking steps will be injected here -->
+                        </div>
+                        <div class="ai-response hidden" id="aiResponse" aria-live="polite">
+                            <!-- Short AI response shown first -->
+                        </div>
+                        <div class="ai-explanation hidden" id="aiExplanation">
+                            <h4>Detailed Explanation</h4>
+                            <p id="aiExplanationText"></p>
+                        </div>
+                        <div class="ai-explanation detailed hidden" id="riddleDetailedExplanation">
+                            <h4>Riddle Breakdown</h4>
+                            <p id="detailedExplanationText"></p>
+                        </div>
+                        <div class="steps-controls">
+                            <label class="toggle-steps">
+                                <input type="checkbox" id="showStepsToggle" checked>
+                                Show steps
+                            </label>
+                        </div>
+                    </div>
+                    <div class="answer-section" id="answerSection">
+                        <input type="text" class="form-control" id="answerInput" placeholder="Enter your answer...">
+                        <button class="btn btn--primary" id="submitBtn" onclick="submitAnswer()">Submit</button>
+                    </div>
+                </div>
+
+                <div class="game-controls">
+                    <button class="btn btn--primary" id="startGameBtn" onclick="initializeGame()">
+                        Start Game
+                    </button>
+                    <button class="btn btn--outline hidden" id="nextQuestionBtn" onclick="nextQuestion()">
+                        Next Question
+                    </button>
+                    <button class="btn btn--outline" id="endGameBtn" onclick="endGame()" disabled>
+                        End Game
+                    </button>
+                </div>
+            </div>
+
+            <div class="achievements-panel" id="achievementsPanel">
+                <h3>Achievements</h3>
+                <div class="achievements-list" id="achievementsList">
+                    <!-- Achievements will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Result Modal -->
+        <div class="modal hidden" id="gameResultModal">
+            <div class="modal-content">
+                <h2 id="resultTitle">Game Complete!</h2>
+                <div class="result-stats">
+                    <div class="result-item">
+                        <span class="result-label">Final Score</span>
+                        <span class="result-value" id="finalScore">You: 0 - AI: 0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Questions Answered</span>
+                        <span class="result-value" id="totalQuestions">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Accuracy</span>
+                        <span class="result-value" id="accuracy">0%</span>
+                    </div>
+                </div>
+                <div class="new-achievements" id="newAchievements">
+                    <!-- New achievements will be shown here -->
+                </div>
+                <div class="skill-mapping-panel" id="skillMappingPanel">
+                    <h3>Skill Mapping</h3>
+                    <canvas id="skillCanvas" width="600" height="360" aria-label="Skill mapping 3D graph"></canvas>
+                    <div class="skill-legend">
+                        <span class="legend-item human">Human</span>
+                        <span class="legend-item ai">AI</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn--primary" onclick="playAgain()">Play Again</button>
+                    <button class="btn btn--outline" onclick="goToLearning()">Back to Learning</button>
+                    <button class="btn btn--outline" onclick="goHome()">Home</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <script>
+// Inlined app.js
+// --- start of inlined JS ---
+// Game Data
+const puzzleData = {
+    "riddles": [
+        {
+            "id": 1,
+            "difficulty": "easy",
+            "question": "What has keys but no locks, space but no room, and you can enter but not go inside?",
+            "answer": "keyboard",
+            "aiApproach": "I analyze objects with the specified properties: keys, space, enter functionality...",
+            "explanation": "This riddle plays on words: 'keys' refers to keyboard keys, 'space' to the spacebar, and 'enter' to the enter key. The object has keys and spaces but is not a room. A keyboard fits all clues.",
+            "humanApproach": "Think about things we use daily that have 'keys' in a different context..."
+        },
+        {
+            "id": 2,
+            "difficulty": "medium",
+            "question": "I am taken from a mine and shut in a wooden case, from which I am never released, yet I am used by almost everyone. What am I?",
+            "answer": "pencil lead",
+            "aiApproach": "Processing: mine extraction + wooden containment + universal usage = graphite/lead",
+            "explanation": "Pencil 'lead' (actually graphite) is mined, then encased in wood to make a pencil. It stays inside the wooden body but is used to write. The riddle intentionally misleads by calling it 'lead'.",
+            "humanApproach": "Think about writing tools and their components..."
+        },
+        {
+            "id": 3,
+            "difficulty": "hard",
+            "question": "The more you take away from me, the bigger I become. What am I?",
+            "answer": "hole",
+            "aiApproach": "Mathematical contradiction analysis: removal increases size. Object: hole",
+            "explanation": "Removing material creates or enlarges a hole. The more you take away (material), the larger the hole becomes — the classic riddle solution.",
+            "humanApproach": "Consider paradoxes in everyday life where less means more..."
+        },
+        {
+            "id": 4,
+            "difficulty": "easy", 
+            "question": "What goes up but never comes down?",
+            "answer": "age",
+            "aiApproach": "Analyzing properties: increases continuously, irreversible process...",
+            "explanation": "Age increases over time and never decreases. It's a straightforward riddle pointing to a one-way quantity.",
+            "humanApproach": "Think about things that change over time in one direction..."
+        },
+        {
+            "id": 5,
+            "difficulty": "medium",
+            "question": "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?",
+            "answer": "map",
+            "aiApproach": "Processing: contains representations without physical objects = map",
+            "explanation": "A map shows cities, mountains, and water as symbols and lines, but it doesn't contain the actual physical components like houses, trees, or fish. It's a representation.",
+            "humanApproach": "Consider representations versus reality..."
+        }
+        ,
+        {
+            "id": 6,
+            "difficulty": "easy",
+            "question": "What has hands but can not clap?",
+            "answer": "clock",
+            "aiApproach": "Identify objects that have 'hands' as a metaphor: clock hands",
+            "explanation": "A clock has 'hands' (hour and minute) but cannot clap. The riddle uses anthropomorphic language.",
+            "humanApproach": "Think about objects that use human terms metaphorically..."
+        },
+        {
+            "id": 7,
+            "difficulty": "medium",
+            "question": "What can travel around the world while staying in a corner?",
+            "answer": "stamp",
+            "aiApproach": "Look for items attached to letters that can 'travel' while sitting on a corner: postage stamp",
+            "explanation": "A stamp stays in the corner of an envelope but the mail can travel around the world.",
+            "humanApproach": "Consider postal items and their usual placement..."
+        },
+        {
+            "id": 8,
+            "difficulty": "hard",
+            "question": "I speak without a mouth and hear without ears. I have nobody, but I come alive with wind. What am I?",
+            "answer": "echo",
+            "aiApproach": "Identify phenomena related to sound reflection and dependence on medium: echo",
+            "explanation": "An echo is a reflection of sound; it 'speaks' when sound bounces back, but has no mouth or ears.",
+            "humanApproach": "Think of sound behaviors in enclosed spaces..."
+        },
+        {
+            "id": 9,
+            "difficulty": "easy",
+            "question": "What gets wetter as it dries?",
+            "answer": "towel",
+            "aiApproach": "Consider objects that absorb water while performing drying: towel",
+            "explanation": "A towel becomes wet while drying you or surfaces, so it gets wetter as it dries something else.",
+            "humanApproach": "Think about drying actions and absorbent materials..."
+        },
+        {
+            "id": 10,
+            "difficulty": "hard",
+            "question": "I have keys but no locks. I have space but no room. You can enter but can't go inside. What am I?",
+            "answer": "keyboard",
+            "aiApproach": "Wordplay: attributes 'keys', 'space', 'enter' map to keyboard components",
+            "explanation": "This riddle points to a keyboard: keys, spacebar, and enter key. It uses multiple terms to lead to the same object.",
+            "humanApproach": "Look for multiple literal hints that point to the same everyday object..."
+        }
+    ],
+    "math": [
+        {
+            "id": 1,
+            "difficulty": "easy",
+            "question": "If 5 cats catch 5 mice in 5 minutes, how many cats are needed to catch 100 mice in 100 minutes?",
+            "answer": "5",
+            "aiApproach": "Rate calculation: 1 cat catches 1 mouse per 5 minutes. Scaling maintains ratio.",
+            "explanation": "Since 5 cats catch 5 mice in 5 minutes, each cat catches 1 mouse in 5 minutes. Over 100 minutes each cat catches 20 mice. To catch 100 mice, you still need 5 cats (100 / 20 = 5).",
+            "steps": [
+                "Each cat catches 1 mouse in 5 minutes.",
+                "In 100 minutes, one cat catches $\\frac{100}{5} = 20$ mice.",
+                "To catch 100 mice, cats needed = $\\frac{100}{20} = 5$."
+            ],
+            "humanApproach": "Think about proportional relationships and what stays constant..."
+        },
+        {
+            "id": 2,
+            "difficulty": "medium",
+            "question": "A bat and ball cost $1.10. The bat costs $1 more than the ball. How much does the ball cost?",
+            "answer": "0.05",
+            "aiApproach": "System of equations: B + ball = 1.10, B = ball + 1.00. Solve: ball = $0.05",
+            "explanation": "Let ball = x, bat = x + 1. Then x + (x + 1) = 1.10 → 2x + 1 = 1.10 → 2x = 0.10 → x = 0.05 (5 cents).",
+            "steps": [
+                "Let the ball cost $x$. Then the bat costs $x + 1$.",
+                "Set up equation: $x + (x + 1) = 1.10$.",
+                "Solve: $2x + 1 = 1.10 → 2x = 0.10 → x = 0.05$."
+            ],
+            "humanApproach": "Resist the intuitive answer. Set up the relationship carefully..."
+        },
+        {
+            "id": 3,
+            "difficulty": "easy",
+            "question": "What is 25% of 80?",
+            "answer": "20",
+            "aiApproach": "Direct calculation: 0.25 × 80 = 20",
+            "explanation": "25% is one quarter. One quarter of 80 is 80 / 4 = 20.",
+            "steps": [
+                "25% is equivalent to $\\frac{1}{4}$.",
+                "$\\frac{1}{4} \\times 80 = 20$."
+            ],
+            "humanApproach": "Quarter of 80, or think 25% as 1/4..."
+        },
+        {
+            "id": 4,
+            "difficulty": "hard",
+            "question": "A man buys a horse for $60, sells it for $70, buys it back for $80, and sells it again for $90. What is his profit?",
+            "answer": "20",
+            "aiApproach": "Transaction analysis: (-60 + 70 - 80 + 90) = $20 profit",
+            "explanation": "Sum the transactions: -60 (purchase) +70 (sell) = +10; then -80 +90 = +10. Total profit = 10 + 10 = $20.",
+            "steps": [
+                "First transaction: -$60 (buy) + $70 (sell) = +$10.",
+                "Second transaction: -$80 + $90 = +$10.",
+                "Total profit = $10 + $10 = $20."
+            ],
+            "humanApproach": "Track each transaction: first trade +$10, second trade +$10..."
+        }
+    ],
+    "logic": [
+        {
+            "id": 1,
+            "difficulty": "easy",
+            "question": "You have 12 balls, one of which is either heavier or lighter than the others. Using a balance scale only 3 times, how do you find the odd ball?",
+            "answer": "divide into groups of 4",
+            "aiApproach": "Optimal division strategy: Split into three groups of 4. Binary elimination process.",
+            "humanApproach": "Think about how to get maximum information from each weighing..."
+        },
+        {
+            "id": 2,
+            "difficulty": "medium",
+            "question": "If you're in a race and you pass the person in 2nd place, what place are you in?",
+            "answer": "2nd",
+            "aiApproach": "Logical sequence: passing 2nd place person means taking their position = 2nd",
+            "humanApproach": "Visualize the race scenario step by step..."
+        },
+        {
+            "id": 3,
+            "difficulty": "hard",
+            "question": "Three switches control three light bulbs in another room. You can flip the switches but can only check the room once. How do you determine which switch controls which bulb?",
+            "answer": "use heat",
+            "aiApproach": "Multi-variable solution: Use time and heat as additional information sources",
+            "humanApproach": "Think about properties of light bulbs beyond just on/off..."
+        }
+    ]
+};
+
+const learningContent = {
+    "riddles": {
+        "title": "Riddle-Solving Strategies",
+        "aiMethod": "Systematic analysis of word patterns, logical deduction, and elimination of impossible answers",
+        "humanMethod": "Creative thinking, lateral connections, and intuitive leaps based on experience",
+        "aiDetails": [
+            "Break down the riddle into key components",
+            "Identify literal vs metaphorical language",
+            "Apply logical constraints systematically",
+            "Use process of elimination"
+        ],
+        "humanDetails": [
+            "Look for wordplay and double meanings",
+            "Draw from personal experience and knowledge",
+            "Make intuitive connections between concepts",
+            "Think outside conventional boundaries"
+        ]
+    },
+    "math": {
+        "title": "Mathematical Reasoning",
+        "aiMethod": "Step-by-step algorithmic approach, formula application, and verification of results",
+        "humanMethod": "Pattern recognition, estimation, and multiple solution pathways",
+        "aiDetails": [
+            "Identify the mathematical concept involved",
+            "Apply relevant formulas and algorithms",
+            "Work through calculations systematically",
+            "Verify results through substitution"
+        ],
+        "humanDetails": [
+            "Look for patterns and relationships",
+            "Use estimation to check reasonableness",
+            "Try multiple approaches to the same problem",
+            "Visualize the problem when possible"
+        ]
+    },
+    "logic": {
+        "title": "Logic and Puzzle Strategies",
+        "aiMethod": "Rule-based reasoning, binary decision trees, and optimal strategy calculation",
+        "humanMethod": "Trial and error, visualization, and creative problem decomposition",
+        "aiDetails": [
+            "Define all constraints and rules clearly",
+            "Use binary decision trees for optimization",
+            "Calculate all possible outcomes",
+            "Select the most efficient strategy"
+        ],
+        "humanDetails": [
+            "Visualize the problem space",
+            "Try different approaches experimentally",
+            "Break complex problems into smaller parts",
+            "Use intuition to guide problem-solving"
+        ]
+    }
+};
+
+const achievements = [
+    {"name": "First Steps", "description": "Complete your first puzzle", "icon": "🎯"},
+    {"name": "Speed Demon", "description": "Answer 5 questions in under 15 seconds each", "icon": "⚡"},
+    {"name": "Perfect Round", "description": "Score 100% in a complete level", "icon": "🏆"},
+    {"name": "AI Challenger", "description": "Beat the AI in 3 consecutive rounds", "icon": "🤖"},
+    {"name": "Logic Master", "description": "Complete all logic puzzles", "icon": "🧠"}
+];
+
+// Game State
+let gameState = {
+    currentPage: 'home',
+    currentModule: 0,
+    currentLevel: 1,
+    humanScore: 0,
+    aiScore: 0,
+    currentQuestion: null,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    gameInProgress: false,
+    timer: null,
+    timeLeft: 30,
+    consecutiveWins: 0,
+    fastAnswers: 0,
+    completedModules: [],
+    unlockedAchievements: [],
+    gameHistory: [],
+    usedQuestions: [], // Track used questions to prevent repeats
+    newlyUnlockedAchievements: [] // Track achievements unlocked in current session
+};
+
+// Metrics for skill mapping and response tracking
+gameState.sessionMetrics = {
+    questions: [], // each entry {id, humanTime, aiThinkTime, aiApproachLength, correct}
+};
+
+// Local Storage Management
+function saveGameData() {
+    const dataToSave = {
+        completedModules: gameState.completedModules,
+        unlockedAchievements: gameState.unlockedAchievements,
+        gameHistory: gameState.gameHistory,
+        totalGames: gameState.gameHistory.length,
+        totalWins: gameState.gameHistory.filter(game => game.humanScore > game.aiScore).length
+    };
+    localStorage.setItem('aiAndIGameData', JSON.stringify(dataToSave));
+}
+
+function loadGameData() {
+    const savedData = localStorage.getItem('aiAndIGameData');
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        gameState.completedModules = data.completedModules || [];
+        gameState.unlockedAchievements = data.unlockedAchievements || [];
+        gameState.gameHistory = data.gameHistory || [];
+    }
+    updateHomeStats();
+    updateAchievementDisplay();
+}
+
+function updateHomeStats() {
+    const totalGames = gameState.gameHistory.length;
+    const totalWins = gameState.gameHistory.filter(game => game.humanScore > game.aiScore).length;
+    const winRate = totalGames > 0 ? Math.round((totalWins / totalGames) * 100) : 0;
+
+    document.getElementById('totalGames').textContent = totalGames;
+    document.getElementById('winRate').textContent = `${winRate}%`;
+    document.getElementById('achievements').textContent = gameState.unlockedAchievements.length;
+}
+
+// Navigation
+function showPage(pageId) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+  
+    // Show target page
+    document.getElementById(pageId).classList.add('active');
+  
+    // Update navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+  
+    gameState.currentPage = pageId;
+  
+    // Update stats when returning to home
+    if (pageId === 'home') {
+        updateHomeStats();
+    }
+}
+
+// Initialize navigation
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pageId = link.getAttribute('data-page');
+        showPage(pageId);
+    });
+});
+
+// Learning Module Functions
+const learningModules = ['riddles', 'math', 'logic'];
+
+function startLearning() {
+    showPage('learn');
+    gameState.currentModule = 0;
+    updateLearningContent();
+}
+
+function updateLearningContent() {
+    const moduleType = learningModules[gameState.currentModule];
+    const content = learningContent[moduleType];
+  
+    // Update progress
+    const progressPercentage = ((gameState.currentModule + 1) / learningModules.length) * 100;
+    document.getElementById('learningProgress').style.width = `${progressPercentage}%`;
+    document.getElementById('progressText').textContent = `Module ${gameState.currentModule + 1} of ${learningModules.length}`;
+  
+    // Update AI approach
+    document.getElementById('aiApproach').innerHTML = `
+        <h4>${content.title}</h4>
+        <p><strong>AI Method:</strong> ${content.aiMethod}</p>
+        <ul>
+            ${content.aiDetails.map(detail => `<li>${detail}</li>`).join('')}
+        </ul>
+    `;
+  
+    // Update Human approach
+    document.getElementById('humanApproach').innerHTML = `
+        <h4>${content.title}</h4>
+        <p><strong>Human Method:</strong> ${content.humanMethod}</p>
+        <ul>
+            ${content.humanDetails.map(detail => `<li>${detail}</li>`).join('')}
+        </ul>
+    `;
+
+  
+    // Update navigation buttons
+    document.getElementById('prevBtn').disabled = gameState.currentModule === 0;
+  
+    if (gameState.currentModule === learningModules.length - 1) {
+        document.getElementById('nextBtn').classList.add('hidden');
+        document.getElementById('playBtn').classList.remove('hidden');
+    } else {
+        document.getElementById('nextBtn').classList.remove('hidden');
+        document.getElementById('playBtn').classList.add('hidden');
+    }
+}
+
+function nextModule() {
+    if (gameState.currentModule < learningModules.length - 1) {
+        gameState.completedModules.push(learningModules[gameState.currentModule]);
+        gameState.currentModule++;
+        updateLearningContent();
+        saveGameData();
+    }
+}
+
+function previousModule() {
+    if (gameState.currentModule > 0) {
+        gameState.currentModule--;
+        updateLearningContent();
+    }
+}
+
+// Game Functions
+function startGame() {
+    showPage('game');
+    resetGame();
+}
+
+function initializeGame() {
+    resetGame();
+    gameState.gameInProgress = true;
+    gameState.usedQuestions = []; // Reset used questions for new game
+    gameState.newlyUnlockedAchievements = []; // Reset newly unlocked achievements
+    document.getElementById('startGameBtn').classList.add('hidden');
+    document.getElementById('endGameBtn').disabled = false;
+    nextQuestion();
+}
+
+function resetGame() {
+    gameState.humanScore = 0;
+    gameState.aiScore = 0;
+    gameState.currentLevel = 1;
+    gameState.questionsAnswered = 0;
+    gameState.correctAnswers = 0;
+    gameState.consecutiveWins = 0;
+    gameState.fastAnswers = 0;
+  
+    updateScoreboard();
+    updateGameStatus("Get ready for your first question!");
+  
+    // Reset UI elements
+    document.getElementById('questionText').textContent = "Welcome to Puzzle Duel! Click 'Start Game' to begin.";
+    document.getElementById('answerInput').value = '';
+    document.getElementById('answerSection').style.display = 'flex';
+    document.getElementById('nextQuestionBtn').classList.add('hidden');
+}
+
+function updateScoreboard() {
+    document.getElementById('humanScore').textContent = gameState.humanScore;
+    document.getElementById('aiScore').textContent = gameState.aiScore;
+    document.getElementById('currentLevel').textContent = gameState.currentLevel;
+}
+
+function updateGameStatus(message) {
+    document.getElementById('gameStatus').textContent = message;
+}
+
+function getRandomQuestion() {
+    // Build a unified list with category tags so used tracking avoids cross-category id collisions
+    const allQuestions = [
+        ...puzzleData.riddles.map(q => ({...q, __category: 'riddles'})),
+        ...puzzleData.math.map(q => ({...q, __category: 'math'})),
+        ...puzzleData.logic.map(q => ({...q, __category: 'logic'}))
+    ];
+  
+    // Filter by difficulty based on level
+    let difficulty;
+    if (gameState.currentLevel <= 2) difficulty = 'easy';
+    else if (gameState.currentLevel <= 5) difficulty = 'medium';
+    else difficulty = 'hard';
+  
+    let availableQuestions = allQuestions.filter(q => 
+        q.difficulty === difficulty && 
+        !gameState.usedQuestions.includes(`${q.__category}:${q.id}`)
+    );
+  
+    // If no available questions of target difficulty, use any unused questions
+    if (availableQuestions.length === 0) {
+        availableQuestions = allQuestions.filter(q => !gameState.usedQuestions.includes(`${q.__category}:${q.id}`));
+    }
+  
+    // If all questions used, reset the used questions array
+    if (availableQuestions.length === 0) {
+        gameState.usedQuestions = [];
+        availableQuestions = allQuestions.filter(q => q.difficulty === difficulty);
+    }
+  
+    // If still no questions, use any questions
+    if (availableQuestions.length === 0) {
+        availableQuestions = allQuestions;
+    }
+
+    const selectedQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+    // record by composite key to avoid collisions across categories
+    gameState.usedQuestions.push(`${selectedQuestion.__category}:${selectedQuestion.id}`);
+  
+    // Return the question without the internal __category property to keep rest of code unchanged
+    const {__category, ...qNoMeta} = selectedQuestion;
+    return qNoMeta;
+}
+
+function nextQuestion() {
+    if (!gameState.gameInProgress) return;
+  
+    gameState.currentQuestion = getRandomQuestion();
+  
+    // Determine question type
+    let questionType = 'Unknown';
+    if (puzzleData.riddles.some(q => q.id === gameState.currentQuestion.id)) {
+        questionType = 'Riddle';
+    } else if (puzzleData.math.some(q => q.id === gameState.currentQuestion.id)) {
+        questionType = 'Math';
+    } else if (puzzleData.logic.some(q => q.id === gameState.currentQuestion.id)) {
+        questionType = 'Logic';
+    }
+  
+    document.getElementById('questionType').textContent = questionType;
+    document.getElementById('questionText').textContent = gameState.currentQuestion.question;
+    document.getElementById('answerInput').value = '';
+    document.getElementById('answerInput').focus();
+    // Record when question was shown to measure human response time
+    gameState.currentQuestionShownAt = Date.now();
+  
+    // Reset answer section styling
+    document.getElementById('answerInput').classList.remove('correct-answer', 'incorrect-answer');
+    document.getElementById('answerSection').style.display = 'flex';
+    document.getElementById('nextQuestionBtn').classList.add('hidden');
+    // Clear previous AI UI (response, thinking steps, explanations)
+    try {
+        const thinkingEl = document.getElementById('aiThinking');
+        const responseEl = document.getElementById('aiResponse');
+        const explanationEl = document.getElementById('aiExplanation');
+        const detailedEl = document.getElementById('riddleDetailedExplanation');
+        if (thinkingEl) thinkingEl.innerHTML = '';
+        if (responseEl) { responseEl.textContent = ''; responseEl.classList.add('hidden'); }
+        if (explanationEl) { document.getElementById('aiExplanationText').textContent = ''; explanationEl.classList.add('hidden'); }
+        if (detailedEl) { document.getElementById('detailedExplanationText').textContent = ''; detailedEl.classList.add('hidden'); }
+    } catch (e) { /* ignore if elements not present */ }
+  
+    startTimer();
+    updateGameStatus("Your turn! Think carefully...");
+}
+
+function startTimer() {
+    gameState.timeLeft = 30;
+    document.getElementById('timerValue').textContent = gameState.timeLeft;
+    document.getElementById('timer').classList.remove('warning');
+  
+    gameState.timer = setInterval(() => {
+        gameState.timeLeft--;
+        document.getElementById('timerValue').textContent = gameState.timeLeft;
+    
+        if (gameState.timeLeft <= 10) {
+            document.getElementById('timer').classList.add('warning');
+        }
+    
+        if (gameState.timeLeft <= 0) {
+            clearInterval(gameState.timer);
+            timeUp();
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    if (gameState.timer) {
+        clearInterval(gameState.timer);
+        gameState.timer = null;
+    }
+    document.getElementById('timer').classList.remove('warning');
+}
+
+function timeUp() {
+    updateGameStatus("Time's up! AI gets the point.");
+    gameState.aiScore++;
+    gameState.questionsAnswered++;
+    gameState.consecutiveWins = 0; // Reset consecutive wins
+    updateScoreboard();
+  
+    document.getElementById('answerSection').style.display = 'none';
+    document.getElementById('nextQuestionBtn').classList.remove('hidden');
+    // Show AI thinking and explanation for learning
+    setTimeout(() => {
+        const start = Date.now();
+        simulateAIAnswer();
+        // approximate AI thinking time recorded when explanation is revealed
+        // revealAIExplanation will be called at the end of simulateAIAnswer -> renderAIThinking
+        gameState.sessionMetrics.questions.push({
+            id: gameState.currentQuestion.id,
+            humanTime: null,
+            aiThinkTime: null,
+            aiApproachLength: (gameState.currentQuestion.aiApproach || '').length,
+            correct: false
+        });
+        // Ensure nextQuestion remains available after AI sequence
+    }, 700);
+  
+    // Check if game should end
+    if (gameState.questionsAnswered >= 10) {
+        setTimeout(endGame, 2000);
+    }
+}
+
+function submitAnswer() {
+    if (!gameState.currentQuestion || !gameState.gameInProgress) return;
+  
+    const userAnswer = document.getElementById('answerInput').value.trim().toLowerCase();
+    const correctAnswer = gameState.currentQuestion.answer.toLowerCase();
+  
+    stopTimer();
+  
+    // More flexible answer checking
+    const isCorrect = userAnswer === correctAnswer || 
+                                     correctAnswer.includes(userAnswer) || 
+                                     userAnswer.includes(correctAnswer) ||
+                                     (userAnswer === "pencil" && correctAnswer === "pencil lead") ||
+                                     (userAnswer === "lead" && correctAnswer === "pencil lead") ||
+                                     (userAnswer === "second" && correctAnswer === "2nd") ||
+                                     (userAnswer === "2nd place" && correctAnswer === "2nd") ||
+                                     (userAnswer === "groups of 4" && correctAnswer === "divide into groups of 4");
+  
+    if (isCorrect) {
+        gameState.humanScore++;
+        gameState.correctAnswers++;
+        gameState.consecutiveWins++;
+    
+        // Check for fast answer achievement
+        if (gameState.timeLeft > 15) {
+            gameState.fastAnswers++;
+        }
+    
+        updateGameStatus("Correct! Great job!");
+        document.getElementById('answerInput').classList.add('correct-answer');
+    
+        checkAchievements();
+        // Record human response time
+        const humanTime = Date.now() - (gameState.currentQuestionShownAt || Date.now());
+        gameState.sessionMetrics.questions.push({
+            id: gameState.currentQuestion.id,
+            humanTime,
+            aiThinkTime: null,
+            aiApproachLength: (gameState.currentQuestion.aiApproach || '').length,
+            correct: true
+        });
+        // Show AI explanation even when correct to help learning
+        setTimeout(() => {
+            simulateAIAnswer();
+        }, 800);
+    } else {
+        gameState.aiScore++;
+        gameState.consecutiveWins = 0;
+        updateGameStatus(`Incorrect. The answer was: ${gameState.currentQuestion.answer}`);
+        document.getElementById('answerInput').classList.add('incorrect-answer');
+        // Record human response time
+        const humanTime = Date.now() - (gameState.currentQuestionShownAt || Date.now());
+        gameState.sessionMetrics.questions.push({
+            id: gameState.currentQuestion.id,
+            humanTime,
+            aiThinkTime: null,
+            aiApproachLength: (gameState.currentQuestion.aiApproach || '').length,
+            correct: false
+        });
+        // After telling the user the correct answer, show AI's reasoning
+        setTimeout(() => {
+            simulateAIAnswer();
+        }, 700);
+    }
+  
+    gameState.questionsAnswered++;
+    updateScoreboard();
+  
+    document.getElementById('answerSection').style.display = 'none';
+    document.getElementById('nextQuestionBtn').classList.remove('hidden');
+  
+    // Check if level should advance
+    if (gameState.questionsAnswered % 3 === 0) {
+        gameState.currentLevel++;
+        updateScoreboard();
+        updateGameStatus(`Level Up! Welcome to Level ${gameState.currentLevel}!`);
+    }
+  
+    // End game after 10 questions
+    if (gameState.questionsAnswered >= 10) {
+        setTimeout(endGame, 2000);
+    }
+}
+
+function simulateAIAnswer() {
+    // Show a short animated AI thinking sequence, then display analysis
+    const aiApproach = gameState.currentQuestion.aiApproach || 'I considered constraints and patterns.';
+    renderAIThinking(aiApproach);
+}
+
+// Render AI thinking steps by splitting the approach into short phrases
+function renderAIThinking(aiApproach) {
+    const thinkingEl = document.getElementById('aiThinking');
+    const responseEl = document.getElementById('aiResponse');
+    const explanationEl = document.getElementById('aiExplanation');
+    const explanationTextEl = document.getElementById('aiExplanationText');
+    const detailedEl = document.getElementById('riddleDetailedExplanation');
+    const detailedTextEl = document.getElementById('detailedExplanationText');
+
+    // Reset
+    thinkingEl.innerHTML = '';
+    explanationTextEl.textContent = '';
+    explanationEl.classList.add('hidden');
+
+    // Break approach into chunks for step-by-step display
+    const steps = aiApproach.split(/[,;:\.]+/).map(s => s.trim()).filter(Boolean);
+    if (steps.length === 0) steps.push(aiApproach);
+
+    // Create step elements
+    steps.forEach((step, idx) => {
+        const stepEl = document.createElement('div');
+        stepEl.className = 'ai-step';
+        stepEl.textContent = step;
+        thinkingEl.appendChild(stepEl);
+    });
+
+    // Show a short AI response summary first (shortened first sentence of approach)
+    responseEl.classList.add('hidden');
+    detailedEl.classList.add('hidden');
+    explanationEl.classList.add('hidden');
+    const firstSentence = aiApproach.split(/[\.\!\?]+/)[0];
+    responseEl.textContent = firstSentence.length > 120 ? firstSentence.slice(0,120) + '...' : firstSentence;
+    responseEl.classList.remove('hidden');
+
+    // Animate steps sequentially
+    let i = 0;
+    const stepEls = Array.from(thinkingEl.querySelectorAll('.ai-step'));
+
+    function highlightNext() {
+        if (i > 0) stepEls[i - 1].classList.remove('pulsing', 'highlight');
+        if (i >= stepEls.length) {
+            // Done thinking — first show AI explanation (approach), then show detailed riddle explanation
+            explanationEl.classList.remove('hidden');
+            revealAIExplanation(aiApproach);
+            // After a short pause, show the detailed riddle explanation (if available)
+            setTimeout(() => {
+                const q = gameState.currentQuestion;
+                const qExp = q && q.explanation;
+                if (qExp && detailedTextEl) {
+                    // determine question type label
+                    let label = 'Detailed Breakdown';
+                    if (puzzleData.riddles.some(x => x.id === q.id)) label = 'Riddle Breakdown';
+                    else if (puzzleData.math.some(x => x.id === q.id)) label = 'Math Breakdown';
+                    else if (puzzleData.logic.some(x => x.id === q.id)) label = 'Logic Breakdown';
+
+                    const header = detailedEl.querySelector('h4');
+                    if (header) header.textContent = label;
+
+                    detailedTextEl.textContent = qExp;
+                    // render steps if available
+                    const steps = q.steps || [];
+                    let stepsList = detailedEl.querySelector('.steps-list');
+                    if (stepsList) stepsList.remove();
+                    stepsList = document.createElement('div');
+                    stepsList.className = 'steps-list';
+                    steps.forEach((s, idx) => {
+                        const item = document.createElement('div');
+                        item.className = 'step-item';
+                        // If KaTeX available, render math expressions between $...$
+                        if (typeof renderMathInElement === 'function') {
+                            item.innerHTML = s;
+                            // render inline math in this item
+                            try { renderMathInElement(item, {delimiters:[{left:'$',right:'$',display:false}]}); } catch(e) {}
+                        } else {
+                            item.textContent = s.replace(/\$\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1/$2');
+                        }
+                        stepsList.appendChild(item);
+                    });
+                    detailedEl.appendChild(stepsList);
+
+                    // Hook up show steps toggle
+                    const toggle = document.getElementById('showStepsToggle');
+                    function updateStepsVisibility() {
+                        if (!stepsList) return;
+                        if (toggle && toggle.checked) stepsList.style.display = 'flex'; else stepsList.style.display = 'none';
+                    }
+                    if (toggle) {
+                        toggle.removeEventListener('change', updateStepsVisibility);
+                        toggle.addEventListener('change', updateStepsVisibility);
+                    }
+                    updateStepsVisibility();
+
+                    detailedEl.classList.remove('hidden');
+                }
+            }, 600);
+            return;
+        }
+        const el = stepEls[i];
+        el.classList.add('pulsing', 'highlight');
+        // Keep this step visible for 800-1100ms
+        const delay = 800 + Math.floor(Math.random() * 300);
+        i++;
+        setTimeout(highlightNext, delay);
+    }
+
+    // Start after a short pause
+    setTimeout(highlightNext, 400);
+}
+
+// Show the AI's final explanation, highlighting important terms
+function revealAIExplanation(aiApproach) {
+    const explanationEl = document.getElementById('aiExplanation');
+    const explanationTextEl = document.getElementById('aiExplanationText');
+
+    // Create a friendly explanation from the approach
+    let explanation = aiApproach;
+
+    // Highlight a few keywords: numbers, core nouns, verbs like analyze/process
+    const keywords = extractKeywords(aiApproach);
+
+    // Replace keywords with highlighted spans
+    keywords.forEach(kw => {
+        const re = new RegExp(`\\b(${escapeRegExp(kw)})\\b`, 'gi');
+        explanation = explanation.replace(re, '<span class="highlight-term">$1</span>');
+    });
+
+    explanationTextEl.innerHTML = explanation;
+    explanationEl.classList.remove('hidden');
+    updateGameStatus('AI explanation revealed.');
+    // Record AI thinking time for the current question (approximate)
+    const lastMetric = gameState.sessionMetrics.questions[gameState.sessionMetrics.questions.length - 1];
+    if (lastMetric && lastMetric.id === gameState.currentQuestion.id && !lastMetric.aiThinkTime) {
+        // estimate ai think time as time since question shown (or 0 if unknown)
+        lastMetric.aiThinkTime = Date.now() - (gameState.currentQuestionShownAt || Date.now());
+    }
+}
+
+// Draw a simple 3D-like skill mapping on the results canvas
+function drawSkillMapping() {
+    const canvas = document.getElementById('skillCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+
+    // Aggregate session metrics
+    const metrics = gameState.sessionMetrics.questions.filter(Boolean);
+    if (metrics.length === 0) {
+        ctx.fillStyle = 'var(--color-text-secondary)';
+        ctx.font = '14px sans-serif';
+        ctx.fillText('No data to map.', 20, 30);
+        return;
+    }
+
+    // Compute scores 0..1 for Thinking (AI reasoning length), Learning (accuracy), Speed (inverse human time)
+    const humanScores = { thinking:0, learning:0, speed:0 };
+    const aiScores = { thinking:0, learning:0, speed:0 };
+
+    // learning = accuracy; thinking = normalized approach length; speed = normalized human speed
+    const maxApproachLength = Math.max(...metrics.map(m => m.aiApproachLength || 0), 1);
+    const maxHumanTime = Math.max(...metrics.map(m => m.humanTime || 1), 1);
+
+    let humanCorrect = 0;
+    metrics.forEach(m => {
+        if (m.correct) humanCorrect++;
+    });
+    const accuracy = humanCorrect / metrics.length;
+
+    // average human time
+    const avgHumanTime = metrics.reduce((s,m)=> s + (m.humanTime || maxHumanTime), 0) / metrics.length;
+
+    humanScores.learning = accuracy;
+    aiScores.learning = 1 - accuracy; // simple inverse as proxy
+
+    humanScores.thinking = 0.5; // placeholder: humans average
+    aiScores.thinking = (metrics.reduce((s,m)=> s + (m.aiApproachLength||0),0) / metrics.length) / maxApproachLength;
+
+    // speed: higher is better. Normalize inverse time
+    humanScores.speed = Math.max(0, Math.min(1, (maxHumanTime - avgHumanTime) / maxHumanTime));
+    aiScores.speed = 0.8; // assume AI fast
+
+    // Draw axes in pseudo-3D: Thinking (left), Learning (top), Speed (right)
+    const cx = w/2, cy = h/2 + 20, radius = Math.min(w,h) * 0.28;
+    const axes = [
+        {name:'Thinking', x: cx - radius, y: cy},
+        {name:'Learning', x: cx, y: cy - radius - 20},
+        {name:'Speed', x: cx + radius, y: cy}
+    ];
+
+    // background grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    for (let r=1;r<=4;r++){
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        axes.forEach((a, i) => {
+            const t = r/4;
+            const px = cx + (a.x - cx) * t;
+            const py = cy + (a.y - cy) * t;
+            if (i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+        });
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    function drawPolygon(scores, color) {
+        ctx.beginPath();
+        axes.forEach((a, i) => {
+            const val = scores[Object.keys(scores)[i]];
+            const px = cx + (a.x - cx) * val;
+            const py = cy + (a.y - cy) * val;
+            if (i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+        });
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.35;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = color.replace('0.','0.');
+        ctx.stroke();
+    }
+
+    // draw human polygon in green and ai in blue
+    drawPolygon(humanScores, 'rgba(33,128,141,0.9)');
+    drawPolygon(aiScores, 'rgba(33,96,141,0.9)');
+
+    // legend and labels
+    ctx.fillStyle = 'var(--color-text)';
+    ctx.font = 'bold 12px sans-serif';
+    axes.forEach((a,i)=>{
+        ctx.fillText(a.name, a.x - 30, a.y + (i===1 ? -10 : 20));
+    });
+
+    ctx.fillStyle = 'rgba(33,128,141,0.95)';
+    ctx.fillRect(10,10,12,8);
+    ctx.fillStyle = 'var(--color-text)';
+    ctx.fillText('Human', 30, 18);
+    ctx.fillStyle = 'rgba(33,96,141,0.95)';
+    ctx.fillRect(90,10,12,8);
+    ctx.fillStyle = 'var(--color-text)';
+    ctx.fillText('AI', 112, 18);
+}
+
+// Very small keyword extractor: pick words longer than 3 chars or numbers
+function extractKeywords(text) {
+    const tokens = text.split(/[^A-Za-z0-9]+/).filter(Boolean);
+    const freq = {};
+    tokens.forEach(t => {
+        const low = t.toLowerCase();
+        if (low.length > 3 || /\d/.test(low)) {
+            freq[low] = (freq[low] || 0) + 1;
+        }
+    });
+    // Return up to 6 highest-frequency tokens
+    return Object.keys(freq).sort((a,b) => freq[b]-freq[a]).slice(0,6);
+}
+
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function endGame() {
+    gameState.gameInProgress = false;
+    stopTimer();
+  
+    // Save game to history
+    const gameResult = {
+        date: new Date().toISOString(),
+        humanScore: gameState.humanScore,
+        aiScore: gameState.aiScore,
+        questionsAnswered: gameState.questionsAnswered,
+        correctAnswers: gameState.correctAnswers,
+        accuracy: Math.round((gameState.correctAnswers / gameState.questionsAnswered) * 100) || 0
+    };
+  
+    gameState.gameHistory.push(gameResult);
+  
+    // Check final achievements
+    checkFinalAchievements();
+  
+    // Save all progress
+    saveGameData();
+  
+    // Show results modal
+    showGameResults(gameResult);
+  
+    // Reset game controls
+    document.getElementById('startGameBtn').classList.remove('hidden');
+    document.getElementById('endGameBtn').disabled = true;
+    document.getElementById('nextQuestionBtn').classList.add('hidden');
+    // Clear AI UI if any
+    try {
+        const thinkingEl = document.getElementById('aiThinking');
+        const responseEl = document.getElementById('aiResponse');
+        const explanationEl = document.getElementById('aiExplanation');
+        const detailedEl = document.getElementById('riddleDetailedExplanation');
+        if (thinkingEl) thinkingEl.innerHTML = '';
+        if (responseEl) { responseEl.textContent = ''; responseEl.classList.add('hidden'); }
+        if (explanationEl) { document.getElementById('aiExplanationText').textContent = ''; explanationEl.classList.add('hidden'); }
+        if (detailedEl) { document.getElementById('detailedExplanationText').textContent = ''; detailedEl.classList.add('hidden'); }
+    } catch (e) { /* ignore if elements not present */ }
+}
+
+function showGameResults(result) {
+    document.getElementById('finalScore').textContent = `You: ${result.humanScore} - AI: ${result.aiScore}`;
+    document.getElementById('totalQuestions').textContent = result.questionsAnswered;
+    document.getElementById('accuracy').textContent = `${result.accuracy}%`;
+  
+    const resultTitle = result.humanScore > result.aiScore ? "Victory! 🎉" : 
+                                         result.humanScore === result.aiScore ? "It's a Tie! 🤝" : "AI Wins This Round 🤖";
+    document.getElementById('resultTitle').textContent = resultTitle;
+  
+    // Show new achievements
+    displayNewAchievements();
+  
+    document.getElementById('gameResultModal').classList.remove('hidden');
+    // Draw skill mapping summary for this session
+    setTimeout(drawSkillMapping, 300);
+}
+
+// Achievement System
+function checkAchievements() {
+    if (gameState.correctAnswers === 1 && !gameState.unlockedAchievements.includes('First Steps')) {
+        unlockAchievement('First Steps');
+    }
+  
+    if (gameState.fastAnswers >= 5 && !gameState.unlockedAchievements.includes('Speed Demon')) {
+        unlockAchievement('Speed Demon');
+    }
+  
+    if (gameState.consecutiveWins >= 3 && !gameState.unlockedAchievements.includes('AI Challenger')) {
+        unlockAchievement('AI Challenger');
+    }
+}
+
+function checkFinalAchievements() {
+    const accuracy = (gameState.correctAnswers / gameState.questionsAnswered) * 100;
+  
+    if (accuracy === 100 && !gameState.unlockedAchievements.includes('Perfect Round')) {
+        unlockAchievement('Perfect Round');
+    }
+  
+    // Check if answered logic puzzles
+    if (gameState.questionsAnswered >= 5 && !gameState.unlockedAchievements.includes('Logic Master')) {
+        unlockAchievement('Logic Master');
+    }
+}
+
+function unlockAchievement(achievementName) {
+    if (!gameState.unlockedAchievements.includes(achievementName)) {
+        gameState.unlockedAchievements.push(achievementName);
+        gameState.newlyUnlockedAchievements.push(achievementName);
+        updateAchievementDisplay();
+    }
+}
+
+function updateAchievementDisplay() {
+    const achievementsList = document.getElementById('achievementsList');
+    achievementsList.innerHTML = '';
+  
+    achievements.forEach(achievement => {
+        const isUnlocked = gameState.unlockedAchievements.includes(achievement.name);
+        const achievementEl = document.createElement('div');
+        achievementEl.className = `achievement ${isUnlocked ? 'unlocked' : 'locked'}`;
+    
+        achievementEl.innerHTML = `
+            <span class="achievement-icon">${achievement.icon}</span>
+            <div class="achievement-info">
+                <div class="achievement-name">${achievement.name}</div>
+                <div class="achievement-desc">${achievement.description}</div>
+            </div>
+        `;
+    
+        achievementsList.appendChild(achievementEl);
+    });
+}
+
+function displayNewAchievements() {
+    const newAchievementsContainer = document.getElementById('newAchievements');
+    newAchievementsContainer.innerHTML = '';
+  
+    if (gameState.newlyUnlockedAchievements.length > 0) {
+        const headerEl = document.createElement('h4');
+        headerEl.textContent = 'New Achievements Unlocked!';
+        newAchievementsContainer.appendChild(headerEl);
+    
+        gameState.newlyUnlockedAchievements.forEach(achievementName => {
+            const achievement = achievements.find(a => a.name === achievementName);
+            if (achievement) {
+                const achievementEl = document.createElement('div');
+                achievementEl.className = 'new-achievement';
+                achievementEl.innerHTML = `
+                    <span class="achievement-icon">${achievement.icon}</span>
+                    <div class="achievement-info">
+                        <div class="achievement-name">${achievement.name}</div>
+                        <div class="achievement-desc">${achievement.description}</div>
+                    </div>
+                `;
+                newAchievementsContainer.appendChild(achievementEl);
+            }
+        });
+    }
+}
+
+// Modal Functions
+function playAgain() {
+    document.getElementById('gameResultModal').classList.add('hidden');
+    initializeGame();
+}
+
+function goToLearning() {
+    document.getElementById('gameResultModal').classList.add('hidden');
+    showPage('learn');
+}
+
+function goHome() {
+    document.getElementById('gameResultModal').classList.add('hidden');
+    showPage('home');
+}
+
+// Theme Toggle
+function initializeTheme() {
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+  
+    document.documentElement.setAttribute('data-color-scheme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+  
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-color-scheme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+        document.documentElement.setAttribute('data-color-scheme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+}
+
+// Event Listeners
+document.getElementById('answerInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        submitAnswer();
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('gameResultModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+        e.currentTarget.classList.add('hidden');
+    }
+});
+
+// Initialize Application
+document.addEventListener('DOMContentLoaded', () => {
+    loadGameData();
+    updateAchievementDisplay();
+    updateHomeStats();
+    initializeTheme();
+  
+    // Show home page by default
+    showPage('home');
+});
+
+// --- end of inlined JS ---
+</script>
+</body>
+</html> 

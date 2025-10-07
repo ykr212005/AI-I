@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & I: THE DILEMMA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-bg"></div>
+    <!-- Header navigation will contain Home (not floating) -->
+    
+    <!-- Landing Page -->
+    <section id="landing" class="screen active">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2 class="logo">AI & I</h2>
+            </div>
+            <div class="nav-links">
+                <a class="btn btn--outline header-nav-link" href="index.html">Home</a>
+                <a class="btn btn--outline" href="scoreboard.html">Get Score</a>
+            </div>
+        </nav>
+        
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="avatar-duel">
+                    <div class="avatar human-avatar">
+                        <div class="avatar-body"></div>
+                        <div class="avatar-head"></div>
+                        <div class="energy-ring human-ring" ></div>
+                    </div>
+                    <div class="vs-text">VS</div>
+                    <div class="avatar ai-avatar">
+                        <div class="avatar-body"></div>
+                        <div class="avatar-head"></div>
+                        <div class="energy-ring ai-ring"></div>
+                    </div>
+                </div>
+                
+                <h1 class="hero-title">Learn AI. Understand AI. Spot AI.</h1>
+                <p class="hero-subtitle">Find the Human in the Machine</p>
+                <p class="hero-explain">Welcome to your essential playground for mastering artificial intelligence. Through interactive games and real-world challenges, you’ll learn to spot AI's influence, understand its logic, and use its power with confidence in your everyday life.</p>
+                
+                <div class="hero-actions" style="justify-content: center;">
+                    <a class="btn btn--primary btn--lg cta-arena" href="gaming-arena.html" style="font-size:1.6rem; padding: 36px 56px; min-width:420px;">
+                        <span class="btn-icon">🎮</span>
+                        <span style="text-transform:uppercase; font-weight:700; letter-spacing:1px;">Enter Arena</span>
+                        <span class="btn-subtitle">Gamified learning process — level up with hands-on AI challenges</span>
+                        <span class="btn-subtitle">Learn AI through guided, high-level experiences</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- simplified landing: features removed to keep the page focused -->
+    </section>
+
+    <!-- Authentication Screen -->
+    <section id="auth" class="screen">
+        <div class="auth-container">
+            <button class="back-btn" onclick="showLanding()">&larr; Back</button>
+            
+            <div class="auth-card">
+                <h2>Welcome to AI & I</h2>
+                <p>Choose your path to begin your AI literacy journey</p>
+                
+                <div class="path-selection" style="justify-content: center;">
+                    <a class="path-card arena-path" href="gaming-arena.html" style="font-size:1.4rem; padding: 28px 44px; min-width:420px; background: var(--color-primary); color: #fff; border: 3px solid var(--color-primary); box-shadow: 0 8px 32px rgba(0,0,0,0.12); text-align:center;">
+                        <div class="path-icon" style="font-size:2.6rem;">🎮</div>
+                        <h3 style="font-size:1.8rem; margin-bottom: 0.25em;">Enter Arena</h3>
+                        <div style="font-size:1rem; font-weight:500; margin-bottom:0.25em;">Gamified learning experience</div>
+                        <div style="font-size:0.95rem; color: #f0f0f0; margin-bottom:0.25em;">Level up your AI instincts with real-world games and challenges.</div>
+                        <div style="font-size:0.95rem; color: #f0f0f0;">Learn practical AI skills in a fun, guided environment.</div>
+                    </a>
+                </div>
+                
+                <div class="profile-form hidden">
+                    <div class="form-group">
+                        <label class="form-label">What should we call you in the Arena?</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your gamer tag">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Choose your Arena avatar</label>
+                        <div class="avatar-selection">
+                            <div class="avatar-option" data-avatar="robot-gamer">🤖</div>
+                            <div class="avatar-option" data-avatar="human-gamer">🧑</div>
+                            <div class="avatar-option" data-avatar="pro-woman">👩‍💼</div>
+                            <div class="avatar-option" data-avatar="pro-man">👨‍💼</div>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary btn--full-width" onclick="startJourney()">Enter the Arena</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Additional app screens moved to separate pages (kept minimal here) -->
+
+    <script src="app.js"></script>
+</body>
+</html>

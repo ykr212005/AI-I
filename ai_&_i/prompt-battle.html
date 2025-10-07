@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Battle Pro | AI-Powered Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-color: #0f172a;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --success-bg: #f0fdf4;
+            --success-text: #166534;
+            --warning-bg: #fefce8;
+            --warning-text: #854d0e;
+            --error-bg: #fef2f2;
+            --error-text: #991b1b;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; font-family: 'Inter', sans-serif;
+            background-color: var(--background-color); color: var(--text-color);
+        }
+
+        .main-container {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100%; padding: 2rem;
+        }
+
+        .view { width: 100%; max-width: 1000px; display: none; }
+        .view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #start-screen { text-align: center; }
+        .start-title { font-size: 3.5rem; font-weight: 800; color: var(--primary-color); }
+        .start-subtitle { font-size: 1.25rem; color: var(--text-light); margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+        .api-key-section {
+            background: var(--surface-color); padding: 2.5rem; border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem; border: 1px solid var(--border-color); text-align: center; max-width: 500px;
+        }
+        .api-key-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; }
+        .api-key-status { font-weight: 500; margin-top: 1rem; }
+        .api-key-status.valid { color: var(--success-text); }
+        .api-key-status.invalid { color: var(--error-text); }
+
+        .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .round-title { font-size: 1.5rem; font-weight: 600; }
+        .total-score { font-size: 1.25rem; font-weight: 600; color: var(--primary-color); }
+        .game-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .game-panel { background: var(--surface-color); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); }
+        .panel-title { margin-top: 0; font-size: 1.25rem; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem; }
+        #target-result { line-height: 1.6; background-color: #f1f5f9; color: #1e293b; padding: 1rem; border-radius: 8px; font-family: 'Courier New', Courier, monospace; }
+        #target-result ul { padding-left: 20px; margin: 0; }
+        #user-prompt { width: 100%; height: 200px; border-radius: 8px; border: 1px solid var(--border-color); padding: 1rem; font-size: 1rem; resize: vertical; }
+
+        #comparison-area { margin-top: 2rem; max-height: 0; overflow: hidden; transition: max-height 0.7s ease-in-out, opacity 0.5s; opacity: 0; }
+        #comparison-area.visible { max-height: 1500px; opacity: 1; }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .feedback-box { padding: 1.5rem; border-radius: 12px; }
+        .feedback-box h3 { margin-top: 0; }
+        .feedback-box.score { background-color: var(--success-bg); color: var(--success-text); }
+        .feedback-box.response { background-color: var(--warning-bg); color: var(--warning-text); }
+        .feedback-box.original { background-color: var(--error-bg); color: var(--error-text); }
+        #original-prompt, #simulated-ai-response { font-style: italic; display: block; white-space: pre-wrap; line-height: 1.6;}
+
+        #final-screen { text-align: center; }
+        #final-score-display { font-size: 4rem; font-weight: 800; color: var(--primary-color); margin: 2rem 0; }
+        
+        .progress-bar { width: 100%; background: #e2e8f0; border-radius: 8px; height: 8px; overflow: hidden; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .progress-fill { height: 100%; width: 0%; background: var(--primary-color); transition: width 0.6s ease-in-out; }
+
+        .btn { display: inline-block; padding: 0.8rem 1.75rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover:not(:disabled) { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-primary:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        .btn-secondary { background-color: var(--border-color); color: var(--text-color); }
+        .btn-secondary:hover { background-color: #cbd5e1; }
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; margin-right: 8px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- LEARNING MODAL STYLES --- */
+        .modal { position: fixed; inset: 0; z-index: 1000; display: flex; background: var(--surface-color); flex-direction: column; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modal.active { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--border-color); flex-shrink: 0; }
+        .modal-header h2 { margin: 0; font-size: 1.5rem; }
+        .modal-close-btn { font-size: 2rem; font-weight: bold; background: none; border: none; cursor: pointer; color: var(--text-light); }
+        .modal-body { display: flex; flex-grow: 1; overflow: hidden; }
+        .modal-sidebar { width: 280px; border-right: 1px solid var(--border-color); padding: 16px; overflow-y: auto; flex-shrink: 0; }
+        .modal-sidebar-btn { display: block; width: 100%; text-align: left; padding: 12px 16px; background: none; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 8px; }
+        .modal-sidebar-btn.active { background-color: #eef2ff; color: var(--primary-color); }
+        .modal-content-area { flex-grow: 1; padding: 32px; overflow-y: auto; position: relative; }
+        .learn-slide { display: none; }
+        .learn-slide.active { display: block; animation: fadeIn 0.5s ease; }
+        .learn-slide h3 { font-size: 2rem; color: var(--primary-color); margin-top: 0; }
+        .learn-slide p { font-size: 1.1rem; line-height: 1.7; max-width: 80ch; }
+        .example-box { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; background-color: var(--background-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; }
+        .example-box pre { background-color: #fff; padding: 1rem; border-radius: 8px; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; }
+        .example-box h4 { margin-top: 0; }
+        .bad { border-left: 3px solid var(--error-text); }
+        .good { border-left: 3px solid var(--success-text); }
+
+        @media (max-width: 768px) {
+            .game-layout, .comparison-grid { grid-template-columns: 1fr; }
+            .start-title { font-size: 2.5rem; }
+            .modal-body { flex-direction: column; }
+            .modal-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); display: flex; overflow-x: auto; padding: 8px; }
+            .modal-sidebar-btn { flex-shrink: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <div id="api-key-screen" class="view active">
+        <div class="api-key-section">
+            <h2 class="panel-title">🔐 Setup Required</h2>
+            <p>Enter your <b>Google Gemini API key</b> to power the interactive evaluation.</p>
+            <input type="password" id="api-key-input" class="api-key-input" placeholder="Paste your API key here...">
+            <button id="save-key-btn" class="btn btn-primary">Save & Continue</button>
+            <div id="api-key-status" class="api-key-status"></div>
+        </div>
+    </div>
+
+    <div id="start-screen" class="view">
+        <h1 class="start-title">⚔️ Prompt Battle Pro</h1>
+        <p class="start-subtitle">Test your prompt engineering skills by crafting prompts to match the target output precisely.</p>
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+             <button id="learn-btn" class="btn btn-secondary">🎓 Learn the Basics</button>
+             <button id="start-game-btn" class="btn btn-primary">Start the Battle! →</button>
+        </div>
+    </div>
+
+    <div id="game-screen" class="view">
+        <div class="game-header">
+            <h2 id="current-round" class="round-title">Round 1 of 5</h2>
+             <button id="in-game-learn-btn" class="btn btn-secondary">🎓 Learning Center</button>
+            <div id="overall-score" class="total-score">Total Score: 0</div>
+        </div>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+        <div class="game-layout">
+            <div class="game-panel">
+                <h3 class="panel-title">🎯 Your Mission: The Target Output</h3>
+                <p>Craft a prompt to generate this exact text, including all formatting and spacing.</p>
+                <div id="target-result"></div>
+            </div>
+            <div class="game-panel">
+                <h3 class="panel-title">✍️ Engineer Your Prompt Here</h3>
+                <textarea id="user-prompt" placeholder="Craft your masterful prompt here..."></textarea>
+                <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                    <button id="submit-btn" class="btn btn-primary">Evaluate Prompt</button>
+                    <button id="next-btn" class="btn btn-secondary" style="display:none;">Next Round →</button>
+                </div>
+            </div>
+        </div>
+        <div id="comparison-area">
+            <h2 style="text-align: center; margin-top: 2.5rem; margin-bottom: 1.5rem;">🤖 AI Evaluation Analysis</h2>
+            <div class="comparison-grid">
+                <div class="feedback-box score">
+                    <h3>⭐ Score & Feedback</h3>
+                    <p><strong>Your Score: <span id="round-score"></span>/10</strong></p>
+                    <p id="score-comment"></p>
+                </div>
+                <div class="feedback-box response">
+                    <h3>🤖 Your Prompt's Likely Output</h3>
+                    <em id="simulated-ai-response"></em>
+                </div>
+                <div class="feedback-box original">
+                    <h3>🔑 The Optimal Prompt</h3>
+                    <em id="original-prompt"></em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-screen" class="view">
+        <h1 class="start-title">🏆 Battle Complete!</h1>
+        <div id="final-score-display"></div>
+        <p class="start-subtitle">Congratulations! You've completed the challenge. Play again to sharpen your skills further.</p>
+        <button id="restart-btn" class="btn btn-primary">Play Again</button>
+    </div>
+</div>
+
+<div id="learnModal" class="modal">
+    <div class="modal-header">
+        <h2>🎓 Prompt Engineering Basics</h2>
+        <button class="modal-close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+        <aside class="modal-sidebar">
+            <button class="modal-sidebar-btn" data-slide="clarity">🎯 Clarity & Specificity</button>
+            <button class="modal-sidebar-btn" data-slide="persona">🎭 Assign a Persona</button>
+            <button class="modal-sidebar-btn" data-slide="format">📋 Define the Format</button>
+            <button class="modal-sidebar-btn" data-slide="examples">📝 Provide Examples</button>
+            <button class="modal-sidebar-btn" data-slide="thinking">🤔 Step-by-Step Thinking</button>
+        </aside>
+        <div class="modal-content-area">
+            <div class="learn-slide" data-slide="clarity">
+                <h3>🎯 Clarity & Specificity</h3>
+                <p>Vague prompts lead to generic, unpredictable answers. The more specific and detailed your instructions, the better the AI can understand and execute your request. Think of it as giving directions: "Go to the city" is less helpful than "Go to 221B Baker Street, London."</p>
+                <div class="example-box">
+                    <div><h4 class="bad">Vague Prompt</h4><pre>Write about a car.</pre></div>
+                    <div><h4 class="good">Specific Prompt</h4><pre>Write a marketing slogan for a new luxury electric SUV called the 'Voltara'. Emphasize its lightning-fast acceleration and eco-friendly features.</pre></div>
+                </div>
+            </div>
+            <div class="learn-slide" data-slide="persona">
+                <h3>🎭 Assign a Persona</h3>
+                <p>Tell the AI *who* it should be. Assigning a role helps it adopt the correct tone, style, and knowledge base for the response. This is one of the easiest ways to dramatically improve output quality.</p>
+                <div class="example-box">
+                    <div><h4 class="bad">No Persona</h4><pre>Explain the benefits of solar power.</pre></div>
+                    <div><h4 class="good">With Persona</h4><pre>Act as a science communicator for a young audience. Explain the benefits of solar power using a simple analogy.</pre></div>
+                </div>
+            </div>
+            <div class="learn-slide" data-slide="format">
+                <h3>📋 Define the Format</h3>
+                <p>Never assume the AI knows how you want the information structured. Explicitly tell it the output format you need. Use keywords like "JSON," "markdown table," "numbered list," or "haiku."</p>
+                 <div class="example-box">
+                    <div><h4 class="bad">No Format</h4><pre>List the pros and cons of remote work.</pre></div>
+                    <div><h4 class="good">Defined Format</h4><pre>Present the pros and cons of remote work in a two-column markdown table with the headers "Advantages" and "Disadvantages".</pre></div>
+                </div>
+            </div>
+            <div class="learn-slide" data-slide="examples">
+                <h3>📝 Provide Examples (Few-Shot)</h3>
+                <p>Show, don't just tell. Providing one or two examples of the desired input and output format (known as few-shot prompting) is an incredibly powerful technique to guide the AI's response.</p>
+                <div class="example-box">
+                     <div><h4 class="bad">No Examples</h4><pre>Classify this text's sentiment: "I am so happy today!"</pre></div>
+                    <div><h4 class="good">With Examples</h4><pre>Classify the sentiment of the text.
+Text: "This is awesome!"
+Sentiment: Positive
+
+Text: "I'm not happy about this."
+Sentiment: Negative
+
+Text: "I am so happy today!"
+Sentiment:</pre></div>
+                </div>
+            </div>
+            <div class="learn-slide" data-slide="thinking">
+                <h3>🤔 Step-by-Step Thinking</h3>
+                <p>For complex problems, riddles, or math questions, instruct the AI to "think step-by-step" or "work out your reasoning." This forces a more logical process and makes it less likely to jump to an incorrect conclusion.</p>
+                <div class="example-box">
+                    <div><h4 class="bad">Direct Question</h4><pre>If a train leaves Station A at 3 PM traveling at 60 mph, and a second train leaves Station B at 4 PM traveling at 80 mph towards Station A, and the stations are 410 miles apart, what time do they meet?</pre></div>
+                    <div><h4 class="good">Step-by-Step Prompt</h4><pre>Solve the following word problem by thinking step-by-step.
+
+Problem: A train leaves Station A at 3 PM traveling at 60 mph... (etc.)
+
+Explain your reasoning for each step.</pre></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(() => {
+    // --- STATE & DOM ELEMENTS ---
+    let apiKey = localStorage.getItem("geminiApiKey") || "";
+    let currentRound = 0;
+    let totalScore = 0;
+    let currentSlideIndex = 0;
+
+    const views = {
+        'api-key-screen': document.getElementById('api-key-screen'),
+        'start-screen': document.getElementById('start-screen'),
+        'game-screen': document.getElementById('game-screen'),
+        'final-screen': document.getElementById('final-screen'),
+    };
+    
+    // API Screen
+    const apiKeyInput = document.getElementById('api-key-input');
+    const saveKeyBtn = document.getElementById('save-key-btn');
+    const apiKeyStatus = document.getElementById('api-key-status');
+    
+    // Game Elements
+    const startGameBtn = document.getElementById('start-game-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const targetResultEl = document.getElementById('target-result');
+    const userPromptEl = document.getElementById('user-prompt');
+    const submitBtn = document.getElementById('submit-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const currentRoundEl = document.getElementById('current-round');
+    const overallScoreEl = document.getElementById('overall-score');
+    const progressFill = document.getElementById('progress-fill');
+    
+    // Comparison Area
+    const comparisonAreaEl = document.getElementById('comparison-area');
+    const originalPromptEl = document.getElementById('original-prompt');
+    const roundScoreEl = document.getElementById('round-score');
+    const scoreCommentEl = document.getElementById('score-comment');
+    const simulatedAiResponseEl = document.getElementById('simulated-ai-response');
+    
+    // Final Screen
+    const finalScoreDisplayEl = document.getElementById('final-score-display');
+    
+    // Learning Modal
+    const learnBtn = document.getElementById('learn-btn');
+    const inGameLearnBtn = document.getElementById('in-game-learn-btn');
+    const learnModal = document.getElementById('learnModal');
+    const modalCloseBtn = document.querySelector('.modal-close-btn');
+    const modalSidebarBtns = document.querySelectorAll('.modal-sidebar-btn');
+    const slides = document.querySelectorAll('.learn-slide');
+
+    const questions = [
+        {
+            result: "Subject: Following Up on the Senior Product Manager Interview\n\nDear Ms. Anya Sharma,\n\nThank you for taking the time to speak with me today about the Senior Product Manager position at Innovate Solutions. I truly enjoyed our conversation, especially discussing the future of the 'Project Nexus' initiative.\n\nMy enthusiasm for this opportunity has only grown, and I am confident that my skills in user-centric design and agile methodology would be a great asset to your team.\n\nI look forward to hearing about the next steps.\n\nSincerely,\nAlex Chen",
+            prompt: "Act as a job applicant named Alex Chen. Write a professional follow-up email to 'Ms. Anya Sharma' after an interview for the 'Senior Product Manager' position at 'Innovate Solutions'. The subject line must be exactly 'Following Up on the Senior Product Manager Interview'. In the first paragraph, you must specifically mention that you enjoyed discussing the 'Project Nexus' initiative. The email should be concise, professional, express strong interest, and end with the closing 'Sincerely,'"
+        },
+        {
+            result: "**My Weekly Goals**\n\n* Finalize the quarterly budget report.\n* Onboard the new marketing hire, David.\n* Schedule the Q4 planning kickoff meeting.\n* **CRITICAL:** Submit the project proposal by EOD Friday.",
+            prompt: "Create a simple note with the title \"My Weekly Goals\" in bold. Below the title, create a bulleted list of four goals. The goals are: 'Finalize the quarterly budget report', 'Onboard the new marketing hire, David', 'Schedule the Q4 planning kickoff meeting', and 'Submit the project proposal by EOD Friday'. The final list item must be marked as 'CRITICAL:' in bold, and the entire item should be a single bullet point."
+        },
+        {
+            result: "Golden hour hitting different in the ancient streets of Rome. 🇮🇹 There's a story around every corner, and I'm trying to listen to them all.\n\nWhat's the most magical city you've ever visited? Let me know below!\n\n#Rome #ItalyTravel #GoldenHour #AncientHistory #TravelGram",
+            prompt: "Write a short, engaging Instagram caption for a photo taken in Rome during golden hour. The caption must start with the phrase \"Golden hour hitting different\". Mention the \"ancient streets of Rome\". In a new paragraph, ask the engagement question: \"What's the most magical city you've ever visited?\". Finally, in another new paragraph, list these five exact hashtags, in this order: #Rome, #ItalyTravel, #GoldenHour, #AncientHistory, #TravelGram"
+        },
+        {
+            result: "**The 'Aura' Smart Mug: Your Perfect Sip, Every Time.**\n\nNever drink lukewarm coffee again. The Aura Smart Mug maintains your beverage at the precise temperature you choose for hours on end, controlled directly from our intuitive mobile app. Crafted from durable ceramic-coated stainless steel, it's both elegant and built to last. Experience the future of beverage enjoyment.",
+            prompt: "Act as a marketing copywriter. Write a short product description for a smart mug called 'Aura'. The headline must be exactly \"**The 'Aura' Smart Mug: Your Perfect Sip, Every Time.**\" in bold. In the paragraph, you must mention that the temperature is controlled via a 'mobile app' and that the mug is made from 'ceramic-coated stainless steel'. The tone should be modern, sophisticated, and benefit-oriented."
+        },
+        {
+            result: "The invention of the **printing press** by **Johannes Gutenberg** around **1440** was a pivotal moment in world history. Before this, books were painstakingly copied by hand, making them rare and expensive. The press allowed for the **mass production** of written materials, which dramatically increased literacy rates and accelerated the spread of new ideas, fueling transformative movements like the Renaissance, the Reformation, and the Age of Enlightenment.",
+            prompt: "Write a single, concise paragraph about the historical significance of the printing press. You must specifically name the inventor **Johannes Gutenberg** and the approximate year **1440**. The paragraph must also include the term **mass production**. All four of these specific terms—'printing press', 'Johannes Gutenberg', '1440', and 'mass production'—must be enclosed in bold markdown."
+        }
+    ].sort(() => 0.5 - Math.random());
+
+    // --- VIEW MANAGEMENT ---
+    const showView = (viewId) => {
+        Object.values(views).forEach(v => v.classList.remove('active'));
+        views[viewId].classList.add('active');
+    };
+    
+    // --- LEARNING MODAL LOGIC ---
+    const showLearnModal = (slideId = 'clarity') => {
+        learnModal.style.display = 'flex';
+        setTimeout(() => learnModal.classList.add('active'), 10);
+        goToSlide(slideId);
+    };
+
+    const hideLearnModal = () => {
+        learnModal.classList.remove('active');
+        setTimeout(() => learnModal.style.display = 'none', 400);
+    };
+
+    const goToSlide = (slideId) => {
+        const slideOrder = Array.from(modalSidebarBtns).map(btn => btn.dataset.slide);
+        currentSlideIndex = slideOrder.indexOf(slideId);
+        if (currentSlideIndex === -1) currentSlideIndex = 0;
+        
+        slides.forEach((slide) => slide.classList.toggle('active', slide.dataset.slide === slideId));
+        modalSidebarBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.slide === slideId));
+        document.querySelector('.modal-content-area').scrollTop = 0;
+    };
+
+    // --- API KEY HANDLING ---
+    saveKeyBtn.addEventListener("click", async () => {
+        const key = apiKeyInput.value.trim();
+        if (!key) {
+            apiKeyStatus.textContent = "Please enter a valid API key.";
+            apiKeyStatus.className = 'api-key-status invalid';
+            return;
+        }
+        apiKeyStatus.textContent = "Validating key...";
+        apiKeyStatus.className = 'api-key-status';
+        try {
+            const test = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest?key=${key}`);
+            if (test.ok) {
+                apiKey = key;
+                localStorage.setItem("geminiApiKey", key);
+                apiKeyStatus.textContent = "✅ API key validated and saved!";
+                apiKeyStatus.className = 'api-key-status valid';
+                setTimeout(() => showView("start-screen"), 1000);
+            } else {
+                const err = await test.json();
+                throw new Error(err.error?.message || "Invalid API Key");
+            }
+        } catch(e) {
+            apiKeyStatus.textContent = `❌ ${e.message}. Please try again.`;
+            apiKeyStatus.className = 'api-key-status invalid';
+        }
+    });
+    
+    // --- TEXT FORMATTING ---
+    const formatTargetText = (text) => {
+        const lines = text.split('\n');
+        let inList = false;
+        let htmlOutput = '';
+        for (const line of lines) {
+            let processedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            if (processedLine.trim().startsWith('* ')) {
+                const listItem = '<li>' + processedLine.trim().substring(2) + '</li>';
+                if (!inList) {
+                    htmlOutput += '<ul>' + listItem;
+                    inList = true;
+                } else {
+                    htmlOutput += listItem;
+                }
+            } else {
+                if (inList) {
+                    htmlOutput += '</ul>';
+                    inList = false;
+                }
+                htmlOutput += processedLine ? (processedLine + '<br>') : '<br>';
+            }
+        }
+        if (inList) htmlOutput += '</ul>';
+        if (htmlOutput.endsWith('<br>')) htmlOutput = htmlOutput.slice(0, -4);
+        return htmlOutput;
+    };
+
+    // --- GAME LOGIC ---
+    const loadQuestion = () => {
+        if (currentRound >= questions.length) {
+            showFinalScreen();
+            return;
+        }
+        const q = questions[currentRound];
+        currentRoundEl.textContent = `Round ${currentRound + 1} of ${questions.length}`;
+        targetResultEl.innerHTML = formatTargetText(q.result);
+        userPromptEl.value = '';
+        comparisonAreaEl.classList.remove('visible');
+        submitBtn.style.display = 'inline-flex';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Evaluate Prompt';
+        nextBtn.style.display = 'none';
+        userPromptEl.disabled = false;
+        userPromptEl.focus();
+    };
+    
+    const handleSubmit = async () => {
+        const userPrompt = userPromptEl.value.trim();
+        if (userPrompt === "") return alert("Please write a prompt before submitting.");
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span>Thinking...';
+        userPromptEl.disabled = true;
+
+        const q = questions[currentRound];
+        let evaluation;
+        try {
+            evaluation = await getAiEvaluation(userPrompt, q.prompt, q.result);
+        } catch (error) {
+            console.error("AI Evaluation failed, using dummy data.", error);
+            evaluation = {
+                score: 5,
+                feedback: "The connection to the AI evaluation service failed. This is a sample evaluation.",
+                simulated_response: "Due to an API error, we couldn't generate a live response."
+            };
+        }
+        
+        const roundScore = evaluation.score || 0;
+        totalScore += roundScore;
+        roundScoreEl.textContent = roundScore;
+        scoreCommentEl.textContent = evaluation.feedback || "No feedback available.";
+        simulatedAiResponseEl.textContent = evaluation.simulated_response || "No simulated response available.";
+        originalPromptEl.textContent = q.prompt;
+        overallScoreEl.textContent = `Total Score: ${totalScore}`;
+        progressFill.style.width = `${((currentRound + 1) / questions.length) * 100}%`;
+        comparisonAreaEl.classList.add('visible');
+        submitBtn.style.display = 'none';
+        nextBtn.style.display = 'inline-flex';
+        nextBtn.focus();
+    };
+    
+    async function getAiEvaluation(userPrompt, originalPrompt, targetText) {
+        if (!apiKey) throw new Error("API Key not set.");
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        const judgePrompt = `You are an expert prompt engineering evaluator. Compare the following:\n\nTARGET OUTPUT:\n${targetText}\n\nORIGINAL PROMPT:\n${originalPrompt}\n\nUSER PROMPT:\n${userPrompt}\n\nGive a JSON response ONLY in this format:\n{\n  "score": <0-10 integer>,\n  "feedback": "<short feedback on clarity, completeness, and structure>",\n  "simulated_response": "<a short simulated response likely from user's prompt>"\n}`;
+
+        const body = {
+            contents: [{ parts: [{ text: judgePrompt }] }],
+            generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
+        };
+        const response = await fetch(API_URL, {
+            method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+        });
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || "Gemini API error");
+        }
+        const data = await response.json();
+        return JSON.parse(data.candidates?.[0]?.content?.parts?.[0]?.text || "{}");
+    }
+
+    const launchConfetti = () => {
+        const duration = 2000, end = Date.now() + duration;
+        (function frame() {
+            const colors = ['#4f46e5', '#ffffff', '#a5b4fc'];
+            confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors });
+            confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+    };
+
+    const showFinalScreen = () => {
+        const maxScore = questions.length * 10;
+        finalScoreDisplayEl.innerHTML = `Your Final Score: <b>${totalScore}</b> / ${maxScore}`;
+        showView('final-screen');
+        launchConfetti();
+    };
+
+    // --- EVENT LISTENERS ---
+    startGameBtn.addEventListener("click", () => {
+        currentRound = 0; totalScore = 0;
+        overallScoreEl.textContent = "Total Score: 0";
+        progressFill.style.width = "0%";
+        questions.sort(() => 0.5 - Math.random());
+        loadQuestion();
+        showView("game-screen");
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        currentRound++; loadQuestion();
+    });
+    
+    submitBtn.addEventListener('click', handleSubmit);
+    restartBtn.addEventListener("click", () => showView("start-screen"));
+    learnBtn.addEventListener('click', () => showLearnModal());
+    inGameLearnBtn.addEventListener('click', () => showLearnModal());
+    modalCloseBtn.addEventListener('click', hideLearnModal);
+    modalSidebarBtns.forEach(btn => btn.addEventListener('click', () => goToSlide(btn.dataset.slide)));
+
+    // --- INITIALIZATION ---
+    if (apiKey) {
+        showView("start-screen");
+    } else {
+        showView("api-key-screen");
+    }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI & I — Scoreboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Page-specific light layout glue using the shared theme tokens */
+    .scoreboard-container { max-width: var(--container-xl); margin: 0 auto; padding: 24px; }
+    .scoreboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    @media (max-width: 1024px) { .scoreboard-grid { grid-template-columns: 1fr; } }
+
+    .profile-card { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; }
+    .profile-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--hologram); border: 2px solid var(--ai-glow); font-size: 28px; }
+    .profile-name { font-weight: 600; font-size: var(--font-size-xl); }
+    .profile-meta { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+
+    .kv { display: grid; grid-template-columns: 1fr auto; gap: 8px; row-gap: 10px; }
+    .kv-label { color: var(--color-text-secondary); }
+    .kv-value { font-weight: 600; }
+
+    .activity-list { display: flex; flex-direction: column; gap: 10px; }
+    .activity-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid var(--color-card-border); border-radius: var(--radius-base); background: var(--color-surface); }
+
+    .xp-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(var(--color-success-rgb), 0.15); color: var(--color-success); border: 1px solid rgba(var(--color-success-rgb), 0.25); padding: 4px 10px; border-radius: 999px; font-size: var(--font-size-sm); font-weight: 600; }
+
+    .lb-row { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: var(--radius-base); }
+    .lb-row:nth-child(odd) { background: var(--color-secondary); }
+    .lb-rank { min-width: 28px; text-align: right; font-weight: 700; color: var(--color-primary); }
+    .lb-name { flex: 1; }
+    .lb-score { font-weight: 600; }
+
+    .soft { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+    .subtle { color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div id="particles-bg"></div>
+  <header class="app-header">
+    <div class="user-info">
+      <div class="user-avatar" id="sbAvatar">🧠</div>
+      <div class="user-details">
+        <span class="user-name" id="sbName">Player One</span>
+        <span class="user-level">Level <span id="sbLevel">12</span></span>
+      </div>
+    </div>
+    <div class="user-stats">
+      <div class="stat"><span class="stat-value" id="sbPoints">4,280</span><span class="stat-label">Points</span></div>
+      <div class="stat"><span class="stat-value" id="sbStreak">9</span><span class="stat-label">Streak</span></div>
+      <div class="stat"><span class="stat-value" id="sbRank">#7</span><span class="stat-label">Rank</span></div>
+    </div>
+    <nav>
+      <a class="btn btn--outline" href="index.html">Home</a>
+      <a class="btn btn--primary" href="gaming-arena.html">Enter Arena</a>
+    </nav>
+  </header>
+
+  <main class="scoreboard-container">
+    <h2 class="section-title" style="text-align:left;">Your Scoreboard</h2>
+
+    <section class="stats-overview" aria-label="summary">
+      <div class="stat-card">
+        <h3>Total Points</h3>
+        <div class="stat-number" id="ovPoints">4,280</div>
+        <div class="soft">+320 this week</div>
+      </div>
+      <div class="stat-card">
+        <h3>Level</h3>
+        <div class="stat-number" id="ovLevel">12</div>
+        <div class="soft">XP: <span id="ovXP">1,240</span> / <span id="ovNextXP">1,500</span></div>
+      </div>
+      <div class="stat-card">
+        <h3>Accuracy</h3>
+        <div class="stat-number" id="ovAccuracy">86%</div>
+        <div class="soft">last 20 challenges</div>
+      </div>
+      <div class="stat-card">
+        <h3>Current Streak</h3>
+        <div class="stat-number" id="ovStreak">9</div>
+        <div class="soft">Best: 14 days</div>
+      </div>
+    </section>
+
+    <div class="scoreboard-grid" style="margin-top:24px;">
+      <!-- LEFT: Progress, Skills, Achievements -->
+      <section class="dashboard-section" aria-label="progress">
+        <h3>Learning Progress</h3>
+        <div class="skills-chart" id="skillsChart">
+          <!-- Skill bars injected by JS -->
+        </div>
+
+        <h3 style="margin-top:24px;">Recent Activity</h3>
+        <div class="activity-list" id="activityList">
+          <!-- Recent rounds injected by JS -->
+        </div>
+
+        <h3 style="margin-top:24px;">Achievements</h3>
+        <div class="achievements-list" id="achievementsList">
+          <!-- Achievements injected by JS -->
+        </div>
+      </section>
+
+      <!-- RIGHT: Player Stats, Leaderboard -->
+      <aside class="dashboard-section" aria-label="stats">
+        <div class="card profile-card" style="margin-bottom:16px;">
+          <div class="card__body">
+            <div class="profile-card">
+              <div class="profile-avatar" id="rightAvatar">🧠</div>
+              <div>
+                <div class="profile-name" id="rightName">Player One</div>
+                <div class="profile-meta">Rank <span id="rightRank">#7</span> • <span id="rightStreak">9-day streak</span></div>
+              </div>
+            </div>
+            <div class="kv" style="margin-top:12px;">
+              <div class="kv-label">XP</div><div class="kv-value"><span id="rightXP">1,240</span> / <span id="rightNextXP">1,500</span> <span class="xp-pill">+80 today</span></div>
+              <div class="kv-label">Points</div><div class="kv-value" id="rightPoints">4,280</div>
+              <div class="kv-label">Win Rate</div><div class="kv-value" id="rightWinRate">62%</div>
+              <div class="kv-label">Badges</div><div class="kv-value" id="rightBadges">6</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card__body">
+            <h3 style="margin-bottom:12px;">Leaderboard</h3>
+            <div class="leaderboard" id="leaderboard">
+              <!-- Leaderboard rows injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__body">
+            <h3 style="margin-bottom:12px;">Quick Actions</h3>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a class="btn btn--secondary" href="gaming-arena.html">Play New Challenge</a>
+              <a class="btn btn--outline" href="prompt-battle.html">Try Prompt Battle</a>
+              <a class="btn btn--outline" href="spot-ai.html">Spot the AI</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    // Scoreboard: load real data from localStorage (Puzzle Lab, Spot AI, and profile)
+    (function initScoreboard() {
+      const fmt = (n) => (typeof n === 'number' ? n.toLocaleString() : n);
+      const clampPct = (n) => Math.max(0, Math.min(100, Math.round(Number(n) || 0)));
+      const AVATAR_EMOJI = {
+        'robot-student': '🤖', 'human-student': '🧑',
+        'professional-woman': '👩‍💼', 'professional-man': '👨‍💼',
+        'pro-woman': '👩‍💼', 'pro-man': '👨‍💼',
+      };
+      const ACH_ICON = {
+        'First Steps': '🎯', 'Speed Demon': '⚡', 'AI Challenger': '🤖',
+        'Perfect Round': '🏅', 'Logic Master': '🧩'
+      };
+
+      // Profile
+      let profileName = 'Player One';
+      let profileAvatar = '🧠';
+      try {
+        const raw = localStorage.getItem('ai_currentUser');
+        if (raw) {
+          const u = JSON.parse(raw);
+          profileName = u.name || profileName;
+          profileAvatar = AVATAR_EMOJI[u.avatar] || profileAvatar;
+        }
+      } catch {}
+
+      // Puzzle Lab history and achievements
+      let gameHistory = [];
+      let unlocked = [];
+      try {
+        const raw = localStorage.getItem('aiAndIGameData');
+        if (raw) {
+          const d = JSON.parse(raw);
+          gameHistory = Array.isArray(d.gameHistory) ? d.gameHistory : [];
+          unlocked = Array.isArray(d.unlockedAchievements) ? d.unlockedAchievements : [];
+        }
+      } catch {}
+
+      // Compute points, streak, win rate, accuracy
+      const totalPoints = gameHistory.reduce((sum, g) => sum + (Number(g.humanScore) || 0), 0);
+      const totalGames = gameHistory.length;
+      const wins = gameHistory.filter(g => (g.humanScore || 0) > (g.aiScore || 0)).length;
+      const winRate = totalGames ? (wins / totalGames) : 0;
+      const last20 = gameHistory.slice(-20);
+      const avgAcc = last20.length ? (last20.reduce((s, g) => s + (Number(g.accuracy) || 0), 0) / last20.length) / 100 : 0;
+      // Streak: consecutive wins from most recent backwards
+      let streak = 0; for (let i = gameHistory.length - 1; i >= 0; i--) { const g = gameHistory[i]; if ((g.humanScore || 0) > (g.aiScore || 0)) streak++; else break; }
+
+      // Level/XP: simple progression, 150 pts per level
+      const level = 1 + Math.floor(totalPoints / 150);
+      const xp = totalPoints % 150;
+      const nextXP = 150;
+
+      // Skills from Spot AI progress (percentages)
+      const spotKeys = {
+        text: 'spot-text-progress-v3',
+        image: 'spot-image-progress-v3',
+        video: 'spot-video-progress-v3',
+      };
+      const skills = [];
+      try {
+        const textPct = clampPct(localStorage.getItem(spotKeys.text));
+        const imgPct = clampPct(localStorage.getItem(spotKeys.image));
+        const vidPct = clampPct(localStorage.getItem(spotKeys.video));
+        skills.push({ name: 'AI Text Detection', value: textPct });
+        skills.push({ name: 'AI Image Detection', value: imgPct });
+        skills.push({ name: 'AI Video Detection', value: vidPct });
+      } catch {
+        // no-op
+      }
+      // Derived skills
+      const critical = clampPct(avgAcc * 100);
+      skills.push({ name: 'Critical Thinking', value: critical });
+      // Prompt Engineering (if prompt battle persists later, plug it here). For now, derive from winRate.
+      skills.push({ name: 'Prompt Engineering', value: clampPct(winRate * 100) });
+
+      // Activity: last 4 games
+      function timeAgo(iso) {
+        const d = iso ? new Date(iso) : null; if (!d) return '';
+        const sec = Math.floor((Date.now() - d.getTime()) / 1000);
+        if (sec < 60) return `${sec}s ago`;
+        const min = Math.floor(sec / 60); if (min < 60) return `${min}m ago`;
+        const hr = Math.floor(min / 60); if (hr < 24) return `${hr}h ago`;
+        const day = Math.floor(hr / 24); if (day === 1) return 'Yesterday'; return `${day} days ago`;
+      }
+      const activity = gameHistory.slice(-4).reverse().map(g => ({
+        title: 'Puzzle Duel — Game',
+        delta: `+${g.humanScore || 0} pts`,
+        when: timeAgo(g.date)
+      }));
+
+      // Achievements list from unlocked
+      const achievements = (unlocked || []).slice(-8).map(name => ({
+        icon: ACH_ICON[name] || '🏆', text: name
+      }));
+
+      // Leaderboard: simple mock + you
+      const you = { name: profileName, score: totalPoints, you: true };
+      const others = [
+        { name: 'Ava', score: 1200 },
+        { name: 'Liam', score: 980 },
+        { name: 'Noah', score: 1500 },
+        { name: 'Mia', score: 860 },
+        { name: 'Ethan', score: 720 },
+      ];
+      const leaderboard = [you, ...others].sort((a,b) => b.score - a.score);
+      const rank = 1 + leaderboard.findIndex(p => p.you);
+
+      // Populate header & overview
+      document.getElementById('sbAvatar').textContent = profileAvatar;
+      document.getElementById('sbName').textContent = profileName;
+      document.getElementById('sbLevel').textContent = level;
+      document.getElementById('sbPoints').textContent = fmt(totalPoints);
+      document.getElementById('sbStreak').textContent = streak;
+      document.getElementById('sbRank').textContent = `#${rank}`;
+
+      document.getElementById('ovPoints').textContent = fmt(totalPoints);
+      document.getElementById('ovLevel').textContent = level;
+      document.getElementById('ovAccuracy').textContent = Math.round((avgAcc || 0) * 100) + '%';
+      document.getElementById('ovStreak').textContent = streak;
+      document.getElementById('ovXP').textContent = fmt(xp);
+      document.getElementById('ovNextXP').textContent = fmt(nextXP);
+
+      // Right column profile
+      document.getElementById('rightAvatar').textContent = profileAvatar;
+      document.getElementById('rightName').textContent = profileName;
+      document.getElementById('rightRank').textContent = `#${rank}`;
+      document.getElementById('rightStreak').textContent = `${streak}-day streak`;
+      document.getElementById('rightXP').textContent = fmt(xp);
+      document.getElementById('rightNextXP').textContent = fmt(nextXP);
+      document.getElementById('rightPoints').textContent = fmt(totalPoints);
+      document.getElementById('rightWinRate').textContent = Math.round((winRate || 0) * 100) + '%';
+      document.getElementById('rightBadges').textContent = achievements.length;
+
+      // Skills
+      const skillsChart = document.getElementById('skillsChart');
+      skillsChart.innerHTML = '';
+      skills.forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'skill-item';
+        item.innerHTML = `
+          <div class="skill-name">${s.name}</div>
+          <div class="skill-bar"><div class="skill-progress" style="width: 0%"></div></div>
+          <div class="skill-value">${s.value}%</div>
+        `;
+        skillsChart.appendChild(item);
+      });
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.skill-item .skill-progress').forEach((el, i) => {
+          el.style.width = (skills[i]?.value || 0) + '%';
+        });
+      });
+
+      // Activity
+      const activityList = document.getElementById('activityList');
+      activityList.innerHTML = '';
+      (activity.length ? activity : [{ title: 'Play a game to see activity', delta: '+0 pts', when: '' }]).forEach(a => {
+        const row = document.createElement('div');
+        row.className = 'activity-item';
+        row.innerHTML = `<div>${a.title} <span class="subtle">${a.when ? '• ' + a.when : ''}</span></div><div class="xp-pill">${a.delta}</div>`;
+        activityList.appendChild(row);
+      });
+
+      // Achievements
+      const achList = document.getElementById('achievementsList');
+      achList.innerHTML = '';
+      (achievements.length ? achievements : [{ icon: '✨', text: 'No achievements yet' }]).forEach(a => {
+        const badge = document.createElement('div');
+        badge.className = 'achievement-badge';
+        badge.innerHTML = `<span>${a.icon}</span><span>${a.text}</span>`;
+        achList.appendChild(badge);
+      });
+
+      // Leaderboard
+      const lb = document.getElementById('leaderboard');
+      lb.innerHTML = '';
+      leaderboard.forEach((p, idx) => {
+        const row = document.createElement('div');
+        row.className = 'lb-row';
+        row.innerHTML = `<div class="lb-rank">${idx + 1}</div><div class="lb-name">${p.you ? 'You — ' : ''}${p.name}</div><div class="lb-score">${fmt(p.score)}</div>`;
+        lb.appendChild(row);
+      });
+    })();
+  </script>
+</body>
+</html>
